@@ -261,13 +261,6 @@
             box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
         }
 
-        .status-message {
-            font-size: 11px;
-            color: #00b4d8;
-            margin-top: 8px;
-            height: 14px;
-        }
-
         /* Анимация пульсации для аватара */
         @keyframes pulse {
             0% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
@@ -277,16 +270,6 @@
 
         .avatar {
             animation: pulse 3s infinite ease-in-out;
-        }
-
-        .file-instructions {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 15px;
-            font-size: 11px;
-            color: #ffc107;
         }
     </style>
 </head>
@@ -304,11 +287,10 @@
         
         <div class="music-player">
             <div class="song-info">
-                <img src="https://static.hitmcdn.com/covers/a/5fb/ecc/807524.jpg" alt="Обложка альбома" class="album-cover">
+                <img src="music1icon.jpg" alt="Обложка альбома" class="album-cover">
                 <div class="song-details">
                     <div class="song-title">типичная ситуация</div>
                     <div class="song-artist">madk1d</div>
-                    <div class="status-message" id="status-message">Готов к воспроизведению</div>
                 </div>
             </div>
             
@@ -340,10 +322,6 @@
                 </span>
                 <input type="range" min="0" max="100" value="70" class="volume-slider" id="volume-slider">
             </div>
-
-            <div class="file-instructions">
-                💡 Положите файлы music1.mp3 и music2.mp3 в папку с этим HTML-файлом
-            </div>
         </div>
         
         <!-- Иконка телеграмма -->
@@ -371,7 +349,7 @@
         const volumeIcon = document.getElementById('volume-icon');
         const songTitle = document.querySelector('.song-title');
         const songArtist = document.querySelector('.song-artist');
-        const statusMessage = document.getElementById('status-message');
+        const albumCover = document.querySelector('.album-cover');
 
         // Состояние плеера
         let isPlaying = false;
@@ -382,13 +360,13 @@
             {
                 title: "типичная ситуация",
                 artist: "madk1d",
-                cover: "https://static.hitmcdn.com/covers/a/5fb/ecc/807524.jpg",
+                cover: "music1icon.jpg", // Локальный файл в той же папке
                 src: "music1.mp3" // Локальный файл в той же папке
             },
             {
                 title: "infinite void",
                 artist: "kur0iwa", 
-                cover: "https://cover.lightaudio.ru/00304a51568e95995ea34a919fa1875671be6abebba76960694ea779977451af6455b19b6064bb70896e5e68618e4eaf9f5455584a817476be4a616e76be91b860f25dfcecb44d8cc2a4d2e4d2b22d43534d3bdce2b2.jpg?size=68x68&quality=95&sign=19df6cf410185b1ea63093eeeaa9c485&c_uniq_tag=BdCEaNDynNY9QrAk73OUNbif5ng5-o-eOrHel4419tk&type=audio",
+                cover: "music2icon.jpg", // Локальный файл в той же папке
                 src: "music2.mp3" // Локальный файл в той же папке
             }
         ];
@@ -408,10 +386,7 @@
             const song = playlist[index];
             songTitle.textContent = song.title;
             songArtist.textContent = song.artist;
-            
-            // Показываем статус загрузки
-            statusMessage.textContent = "Загрузка...";
-            statusMessage.style.color = "#00b4d8";
+            albumCover.src = song.cover;
             
             // Устанавливаем источник аудио
             audioPlayer.src = song.src;
@@ -426,30 +401,6 @@
                 const totalMinutes = Math.floor(audioPlayer.duration / 60);
                 const totalSeconds = Math.floor(audioPlayer.duration % 60);
                 totalTimeEl.textContent = `${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}`;
-                statusMessage.textContent = "Готов к воспроизведению";
-            });
-
-            // Обработка ошибок загрузки
-            audioPlayer.addEventListener('error', function(e) {
-                console.error('Ошибка загрузки аудио:', e);
-                statusMessage.textContent = "Файл не найден: " + song.src;
-                statusMessage.style.color = "#ff6b6b";
-                
-                // Показываем инструкцию
-                setTimeout(() => {
-                    statusMessage.innerHTML = 'Положите файл <strong>' + song.src + '</strong> в папку с HTML';
-                }, 2000);
-            });
-
-            // Событие при начале загрузки
-            audioPlayer.addEventListener('loadstart', function() {
-                statusMessage.textContent = "Загрузка " + song.src + "...";
-            });
-
-            // Событие при готовности к воспроизведению
-            audioPlayer.addEventListener('canplay', function() {
-                statusMessage.textContent = "Готов к воспроизведению";
-                statusMessage.style.color = "#00b4d8";
             });
         }
 
@@ -458,21 +409,9 @@
             if (isPlaying) {
                 audioPlayer.pause();
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                statusMessage.textContent = "Пауза";
             } else {
-                audioPlayer.play().then(() => {
-                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    statusMessage.textContent = "Воспроизведение";
-                }).catch(error => {
-                    console.error('Ошибка воспроизведения:', error);
-                    statusMessage.textContent = "Ошибка воспроизведения";
-                    statusMessage.style.color = "#ff6b6b";
-                    
-                    // Показываем подробную инструкцию
-                    setTimeout(() => {
-                        statusMessage.innerHTML = 'Проверьте файлы music1.mp3 и music2.mp3 в папке';
-                    }, 2000);
-                });
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             }
             isPlaying = !isPlaying;
         }
@@ -482,9 +421,7 @@
             currentSongIndex = (currentSongIndex + 1) % playlist.length;
             loadSong(currentSongIndex);
             if (isPlaying) {
-                setTimeout(() => {
-                    audioPlayer.play();
-                }, 500);
+                audioPlayer.play();
             }
         }
 
@@ -493,9 +430,7 @@
             currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
             loadSong(currentSongIndex);
             if (isPlaying) {
-                setTimeout(() => {
-                    audioPlayer.play();
-                }, 500);
+                audioPlayer.play();
             }
         }
 
@@ -554,8 +489,6 @@
 
         // Перемотка при клике на прогресс-бар
         function setProgress(e) {
-            if (!audioPlayer.duration) return;
-            
             const width = this.clientWidth;
             const clickX = e.offsetX;
             const duration = audioPlayer.duration;
