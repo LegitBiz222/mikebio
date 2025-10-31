@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mike nekrulov | био</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Анимированный фон */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.pinimg.com/originals/5d/ae/10/5dae104716944030cb770fe9383a47a1.gif') center/cover no-repeat;
+            z-index: -2;
+        }
+
+        /* Затемнение фона для лучшей читаемости */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .bio-container {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-section {
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00b4d8;
+            margin: 0 auto 15px;
+            box-shadow: 0 0 25px rgba(0, 180, 216, 0.6);
+        }
+
+        .name {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .bio-text {
+            color: #e0e0e0;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-style: italic;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .music-player {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 25px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .album-cover {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .song-details {
+            flex: 1;
+            text-align: left;
+        }
+
+        .song-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .song-artist {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .control-btn:hover {
+            color: #00b4d8;
+            transform: scale(1.1);
+            background: rgba(0, 180, 216, 0.1);
+        }
+
+        .play-pause {
+            font-size: 28px;
+            background: rgba(0, 180, 216, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .progress-container {
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00b4d8, #0096c7);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-top: 8px;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .volume-icon {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #fff;
+            transition: all 0.3s;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .volume-icon:hover {
+            color: #00b4d8;
+            transform: scale(1.2);
+        }
+
+        .volume-slider {
+            width: 100px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #00b4d8;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.6);
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: #0096c7;
+            transform: scale(1.2);
+        }
+
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            color: #fff;
+            font-size: 40px;
+            transition: all 0.3s;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .telegram-link:hover {
+            color: #00b4d8;
+            transform: scale(1.2);
+            background: rgba(0, 180, 216, 0.2);
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
+        }
+
+        /* Анимация пульсации для аватара */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(0, 180, 216, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
+        }
+
+        .avatar {
+            animation: pulse 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="animated-bg"></div>
+    <div class="bg-overlay"></div>
+    
+    <div class="bio-container">
+        <div class="profile-section">
+            <img src="https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg" alt="Аватар" class="avatar">
+            <h1 class="name">mike nekrulov</h1>
+            <p class="bio-text">hey</p>
+        </div>
+        
+        <div class="music-player">
+            <div class="song-info">
+                <img src="https://static.hitmcdn.com/covers/a/5fb/ecc/807524.jpg" alt="Обложка альбома" class="album-cover">
+                <div class="song-details">
+                    <div class="song-title">типичная ситуация</div>
+                    <div class="song-artist">madk1d</div>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <button class="control-btn prev-btn">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="control-btn play-pause">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn next-btn">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="total-time">0:00</span>
+                </div>
+            </div>
+            
+            <div class="volume-control">
+                <span class="volume-icon" id="volume-icon">
+                    <i class="fas fa-volume-up"></i>
+                </span>
+                <input type="range" min="0" max="100" value="70" class="volume-slider" id="volume-slider">
+            </div>
+        </div>
+        
+        <!-- Иконка телеграмма -->
+        <a href="https://t.me/mosc8n" target="_blank" class="telegram-link">
+            <i class="fab fa-telegram-plane"></i>
+        </a>
+    </div>
+
+    <!-- Аудио элемент -->
+    <audio id="audio-player">
+        <source src="https://assets.codepen.io/4358584/Forget_Me_Nots.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Элементы управления музыкой
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.querySelector('.play-pause');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const progressBar = document.getElementById('progress');
+        const progressContainer = document.getElementById('progress-bar');
+        const currentTimeEl = document.querySelector('.current-time');
+        const totalTimeEl = document.querySelector('.total-time');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeIcon = document.getElementById('volume-icon');
+        const songTitle = document.querySelector('.song-title');
+        const songArtist = document.querySelector('.song-artist');
+        const albumCover = document.querySelector('.album-cover');
+
+        // Состояние плеера
+        let isPlaying = false;
+        let currentSongIndex = 0;
+
+        // Плейлист с реальными треками
+        const playlist = [
+            {
+                title: "типичная ситуация",
+                artist: "madk1d",
+                cover: "https://static.hitmcdn.com/covers/a/5fb/ecc/807524.jpg",
+                src: "https://rus.hitmotop.com/get/music/20240113/madk1d_-_tipichnaya_situaciya_prod_by_vhs_77264982.mp3"
+            },
+            {
+                title: "infinite void",
+                artist: "kur0iwa",
+                cover: "https://cover.lightaudio.ru/00304a51568e95995ea34a919fa1875671be6abebba76960694ea779977451af6455b19b6064bb70896e5e68618e4eaf9f5455584a817476be4a616e76be91b860f25dfcecb44d8cc2a4d2e4d2b22d43534d3bdce2b2.jpg?size=68x68&quality=95&sign=19df6cf410185b1ea63093eeeaa9c485&c_uniq_tag=BdCEaNDynNY9QrAk73OUNbif5ng5-o-eOrHel4419tk&type=audio",
+                src: "https://storage9.lightaudio.ru/dm/39a10f0b/3bb508fc/kur0iwa%20%E2%80%94%20infinite%20void.mp3?d=111&amp;v=fad8a63ae1"
+            }
+        ];
+
+        // Инициализация
+        function initPlayer() {
+            loadSong(currentSongIndex);
+            updateProgressBar();
+            
+            // Установка громкости
+            audioPlayer.volume = volumeSlider.value / 100;
+            updateVolumeIcon();
+        }
+
+        // Загрузка песни
+        function loadSong(index) {
+            const song = playlist[index];
+            songTitle.textContent = song.title;
+            songArtist.textContent = song.artist;
+            albumCover.src = song.cover;
+            audioPlayer.src = song.src;
+            
+            // Сброс времени
+            currentTimeEl.textContent = "0:00";
+            progressBar.style.width = "0%";
+            
+            // Обновление общего времени после загрузки метаданных
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                const totalMinutes = Math.floor(audioPlayer.duration / 60);
+                const totalSeconds = Math.floor(audioPlayer.duration % 60);
+                totalTimeEl.textContent = `${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}`;
+            });
+        }
+
+        // Воспроизведение/пауза
+        function togglePlay() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Следующий трек
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Предыдущий трек
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Обновление прогресс-бара
+        function updateProgressBar() {
+            // Обновление текущего времени
+            const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+            const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+            currentTimeEl.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
+            
+            // Обновление прогресс-бара
+            if (audioPlayer.duration) {
+                const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+            }
+            
+            // Продолжаем обновление
+            requestAnimationFrame(updateProgressBar);
+        }
+
+        // Обновление иконки громкости
+        function updateVolumeIcon() {
+            const volume = audioPlayer.volume;
+            
+            if (volume === 0) {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else if (volume < 0.5) {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        }
+
+        // Установка громкости
+        function setVolume() {
+            const volume = volumeSlider.value / 100;
+            audioPlayer.volume = volume;
+            updateVolumeIcon();
+        }
+
+        // Переключение звука при клике на иконку
+        function toggleMute() {
+            if (audioPlayer.volume > 0) {
+                // Сохраняем текущую громкость перед выключением
+                volumeSlider.dataset.previousVolume = volumeSlider.value;
+                audioPlayer.volume = 0;
+                volumeSlider.value = 0;
+            } else {
+                // Восстанавливаем предыдущую громкость
+                const previousVolume = volumeSlider.dataset.previousVolume || 70;
+                audioPlayer.volume = previousVolume / 100;
+                volumeSlider.value = previousVolume;
+            }
+            updateVolumeIcon();
+        }
+
+        // Перемотка при клике на прогресс-бар
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+
+        // Обработчики событий
+        playPauseBtn.addEventListener('click', togglePlay);
+        prevBtn.addEventListener('click', prevSong);
+        nextBtn.addEventListener('click', nextSong);
+        volumeSlider.addEventListener('input', setVolume);
+        volumeIcon.addEventListener('click', toggleMute);
+        progressContainer.addEventListener('click', setProgress);
+
+        // Автопереход к следующему треку
+        audioPlayer.addEventListener('ended', nextSong);
+
+        // Инициализация плеера
+        initPlayer();
+    </script>
+</body>
+</html>
