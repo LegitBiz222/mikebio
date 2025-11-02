@@ -8,11 +8,17 @@
     <!-- Подключаем Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('') format('woff2'),
+                 url('') format('woff');
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -25,6 +31,10 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
+            font-family: 'Microsoft Sans Serif', sans-serif;
+            --accent-color: #00b4d8;
+            --accent-color-shadow: rgba(0, 180, 216, 0.6);
+            --accent-color-dark: #0096c7;
         }
 
         /* Видео фон */
@@ -74,9 +84,9 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-color, #00b4d8);
+            border: 3px solid var(--accent-color);
             margin: 0 auto 15px;
-            box-shadow: 0 0 25px var(--accent-color-shadow, rgba(0, 180, 216, 0.6));
+            box-shadow: 0 0 25px var(--accent-color-shadow);
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -91,6 +101,7 @@
             margin-bottom: 5px;
             letter-spacing: 1px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .bio-text {
@@ -99,6 +110,7 @@
             margin-bottom: 20px;
             font-style: italic;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+            font-family: inherit;
         }
 
         .links-container {
@@ -124,23 +136,23 @@
         }
 
         .social-link:hover {
-            background: var(--accent-color, #00b4d8);
+            background: var(--accent-color);
             transform: scale(1.2);
             color: #000;
         }
 
         .view-counter {
             position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.3));
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color-shadow);
             padding: 5px 10px;
             border-radius: 15px;
             font-size: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
-            border: 1px solid var(--accent-color, #00b4d8);
+            border: 1px solid var(--accent-color);
         }
 
         .music-player {
@@ -181,11 +193,13 @@
             font-size: 14px;
             font-weight: 600;
             color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .song-artist {
             font-size: 12px;
             color: #b0b0b0;
+            font-family: inherit;
         }
 
         .player-controls {
@@ -207,14 +221,14 @@
         }
 
         .control-btn:hover {
-            color: var(--accent-color, #00b4d8);
+            color: var(--accent-color);
             transform: scale(1.1);
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.1));
+            background: rgba(0, 180, 216, 0.1);
         }
 
         .play-pause {
             font-size: 28px;
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.2));
+            background: rgba(0, 180, 216, 0.2);
             width: 50px;
             height: 50px;
             display: flex;
@@ -239,11 +253,11 @@
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-color, #00b4d8), var(--accent-color-dark, #0096c7));
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-color-dark));
             border-radius: 3px;
             width: 0%;
             transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--accent-color-shadow, rgba(0, 180, 216, 0.5));
+            box-shadow: 0 0 10px var(--accent-color-shadow);
         }
 
         .time-display {
@@ -252,6 +266,7 @@
             font-size: 12px;
             color: #a0a0a0;
             margin-top: 8px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .volume-control {
@@ -270,7 +285,7 @@
         }
 
         .volume-icon:hover {
-            color: var(--accent-color, #00b4d8);
+            color: var(--accent-color);
             transform: scale(1.2);
         }
 
@@ -288,14 +303,14 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--accent-color, #00b4d8);
+            background: var(--accent-color);
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 8px var(--accent-color-shadow, rgba(0, 180, 216, 0.6));
+            box-shadow: 0 0 8px var(--accent-color-shadow);
         }
 
         .volume-slider::-webkit-slider-thumb:hover {
-            background: var(--accent-color-dark, #0096c7);
+            background: var(--accent-color-dark);
             transform: scale(1.2);
         }
 
@@ -304,8 +319,8 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.3));
-            border: 1px solid var(--accent-color, #00b4d8);
+            background: var(--accent-color-shadow);
+            border: 1px solid var(--accent-color);
             color: #fff;
             padding: 8px 15px;
             border-radius: 20px;
@@ -313,11 +328,11 @@
             font-size: 12px;
             transition: all 0.3s;
             backdrop-filter: blur(10px);
-            display: none; /* Скрыта по умолчанию */
+            display: none;
         }
 
         .login-btn:hover {
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.5));
+            background: rgba(0, 180, 216, 0.5);
             transform: scale(1.05);
         }
 
@@ -342,7 +357,7 @@
             background: rgba(30, 30, 30, 0.95);
             padding: 30px;
             border-radius: 15px;
-            border: 1px solid var(--accent-color, #00b4d8);
+            border: 1px solid var(--accent-color);
             min-width: 300px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
@@ -350,7 +365,7 @@
         .modal h2 {
             margin-bottom: 20px;
             text-align: center;
-            color: var(--accent-color, #00b4d8);
+            color: var(--accent-color);
         }
 
         .input-group {
@@ -376,7 +391,7 @@
 
         .input-group input:focus {
             outline: none;
-            border-color: var(--accent-color, #00b4d8);
+            border-color: var(--accent-color);
         }
 
         .modal-buttons {
@@ -396,7 +411,7 @@
         }
 
         .modal-btn.primary {
-            background: var(--accent-color, #00b4d8);
+            background: var(--accent-color);
             color: #000;
         }
 
@@ -417,73 +432,127 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1001;
             backdrop-filter: blur(10px);
             overflow-y: auto;
         }
 
         .menu-header {
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.2));
-            padding: 20px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-color-dark) 100%);
+            padding: 25px 20px;
             text-align: center;
-            border-bottom: 1px solid var(--accent-color, #00b4d8);
+            position: relative;
+        }
+
+        .menu-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .menu-content {
-            padding: 20px;
+            padding: 25px;
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            min-height: calc(100vh - 80px);
         }
 
         .menu-section {
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-section:hover {
+            transform: translateY(-2px);
         }
 
         .menu-section h3 {
-            color: var(--accent-color, #00b4d8);
-            margin-bottom: 12px;
-            font-size: 16px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
         }
 
         .customization-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
         .option-item {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
-            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             border: 2px solid transparent;
-            font-size: 12px;
+            font-size: 13px;
+            position: relative;
         }
 
         .option-item:hover {
-            border-color: var(--accent-color, #00b4d8);
+            border-color: var(--accent-color);
             transform: scale(1.05);
+            background: rgba(0, 0, 0, 0.6);
         }
 
         .option-item.active {
-            border-color: var(--accent-color, #00b4d8);
-            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.2));
+            border-color: var(--accent-color);
+            background: rgba(0, 180, 216, 0.2);
+        }
+
+        .option-item.active::after {
+            content: 'Выбран';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: #000;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .option-item:hover .delete-btn {
+            opacity: 1;
         }
 
         .option-item img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
             object-fit: cover;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            border: 2px solid rgba(255,255,255,0.1);
         }
 
         .option-item .song-cover {
@@ -493,69 +562,87 @@
         }
 
         .color-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            margin: 0 auto 5px;
-            border: 2px solid rgba(255,255,255,0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin: 0 auto 8px;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .input-with-btn {
             display: flex;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .input-with-btn input {
             flex: 1;
-            padding: 8px;
-            border-radius: 6px;
+            padding: 10px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             color: #fff;
-            font-size: 12px;
+            font-size: 13px;
+        }
+
+        .input-with-btn input:focus {
+            outline: none;
+            border-color: var(--accent-color);
         }
 
         .input-with-btn button {
-            padding: 8px 12px;
-            background: var(--accent-color, #00b4d8);
+            padding: 10px 15px;
+            background: var(--accent-color);
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             color: #000;
             cursor: pointer;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 13px;
             white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .input-with-btn button:hover {
+            transform: scale(1.05);
+            background: var(--accent-color-dark);
         }
 
         .song-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 12px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+
+        .song-item:hover {
+            background: rgba(0, 0, 0, 0.6);
         }
 
         .song-item-info {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .song-item-actions {
             display: flex;
-            gap: 4px;
+            gap: 5px;
         }
 
         .action-btn {
-            padding: 4px 8px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 11px;
+            transition: all 0.3s;
         }
 
         .action-btn.delete {
@@ -563,58 +650,76 @@
             color: white;
         }
 
+        .action-btn.delete:hover {
+            background: #ff3742;
+            transform: scale(1.05);
+        }
+
         .action-btn.play {
-            background: var(--accent-color, #00b4d8);
+            background: var(--accent-color);
             color: black;
+        }
+
+        .action-btn.play:hover {
+            background: var(--accent-color-dark);
+            transform: scale(1.05);
         }
 
         .link-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 12px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
         }
 
         .link-item-info {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .link-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
         }
 
         .close-menu {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: none;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
             transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
         }
 
         .close-menu:hover {
-            color: var(--accent-color, #00b4d8);
-            transform: scale(1.2);
+            color: var(--accent-color);
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .small-btn {
-            padding: 6px 10px;
-            font-size: 11px;
+            padding: 8px 15px;
+            font-size: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            background: var(--accent-color, #00b4d8);
+            background: var(--accent-color);
             color: #000;
             font-weight: 600;
             transition: all 0.3s;
@@ -622,13 +727,14 @@
 
         .small-btn:hover {
             transform: scale(1.05);
+            background: var(--accent-color-dark);
         }
 
         /* Анимация пульсации для аватара */
         @keyframes pulse {
-            0% { box-shadow: 0 0 20px var(--accent-color-shadow, rgba(0, 180, 216, 0.6)); }
-            50% { box-shadow: 0 0 30px var(--accent-color-shadow, rgba(0, 180, 216, 0.8)); }
-            100% { box-shadow: 0 0 20px var(--accent-color-shadow, rgba(0, 180, 216, 0.6)); }
+            0% { box-shadow: 0 0 20px var(--accent-color-shadow); }
+            50% { box-shadow: 0 0 30px var(--accent-color-shadow); }
+            100% { box-shadow: 0 0 20px var(--accent-color-shadow); }
         }
 
         .avatar {
@@ -642,17 +748,53 @@
 
         .error-message {
             color: #ff4757;
-            font-size: 11px;
-            margin-top: 4px;
+            font-size: 12px;
+            margin-top: 5px;
             text-align: center;
         }
 
-        /* Эффекты курсора */
-        .cursor-effect {
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.1s ease;
+        /* Подпись в меню */
+        .menu-footer {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        /* Загрузка файлов */
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 10px 15px;
+            background: var(--accent-color);
+            color: #000;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: var(--accent-color-dark);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -769,9 +911,9 @@
                 <div class="customization-options" id="avatar-options">
                     <!-- Опции аватаров будут добавлены динамически -->
                 </div>
-                <div class="input-with-btn">
-                    <input type="text" id="custom-avatar-url" placeholder="URL нового аватара">
-                    <button id="add-avatar">добавить аватарку</button>
+                <div class="file-input-wrapper">
+                    <input type="file" id="avatar-file" accept="image/*">
+                    <label for="avatar-file" class="file-input-label">Загрузить аватар</label>
                 </div>
             </div>
 
@@ -810,25 +952,27 @@
             <div class="menu-section">
                 <h3>курсор</h3>
                 <div class="customization-options" id="cursor-options">
-                    <div class="option-item" onclick="selectCursor('default')">
-                        <div style="width: 40px; height: 40px; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-mouse-pointer"></i>
+                    <div class="option-item active" onclick="selectCursor('default')">
+                        <div style="width: 50px; height: 50px; background: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
+                            <i class="fas fa-mouse-pointer" style="font-size: 20px;"></i>
                         </div>
                         <div>Стандартный</div>
                     </div>
-                    <div class="option-item" onclick="selectCursor('https://cdn.custom-cursor.com/db/4646/32/arrow2692.png')">
-                        <img src="https://cdn.custom-cursor.com/db/4646/32/arrow2692.png" style="width: 40px; height: 40px; object-fit: contain;">
-                        <div>Стрелка</div>
-                    </div>
-                    <div class="option-item" onclick="selectCursor('https://cdn.custom-cursor.com/db/4645/32/arrow2691.png')">
-                        <img src="https://cdn.custom-cursor.com/db/4645/32/arrow2691.png" style="width: 40px; height: 40px; object-fit: contain;">
-                        <div>Игровой</div>
-                    </div>
                 </div>
-                <div class="input-with-btn">
-                    <input type="text" id="custom-cursor-url" placeholder="URL курсора (png, webp, cur)">
-                    <button onclick="addCustomCursor()">добавить курсор</button>
+                <div class="file-input-wrapper">
+                    <input type="file" id="cursor-file" accept=".png,.webp,.jpg,.jpeg,.cur">
+                    <label for="cursor-file" class="file-input-label">Загрузить курсор</label>
                 </div>
+            </div>
+
+            <!-- Font Section -->
+            <div class="menu-section">
+                <h3>шрифт</h3>
+                <div class="file-input-wrapper">
+                    <input type="file" id="font-file" accept=".woff,.woff2,.ttf,.otf">
+                    <label for="font-file" class="file-input-label">Загрузить шрифт</label>
+                </div>
+                <button class="small-btn" onclick="resetFont()" style="width: 100%; margin-top: 10px;">Сбросить шрифт</button>
             </div>
 
             <!-- Playlist Section -->
@@ -894,6 +1038,7 @@
                 <button class="small-btn" id="save-name" style="width: 100%;">изменить ник</button>
             </div>
         </div>
+        <div class="menu-footer">by mike nekrulov</div>
     </div>
 
     <!-- Аудио элемент -->
@@ -947,7 +1092,6 @@
         let currentSongIndex = 0;
         let isAdmin = false;
         let userIP = '';
-        let cursorEffects = [];
 
         // Настройки по умолчанию
         let settings = {
@@ -958,13 +1102,10 @@
                 { name: 'Видео фон', type: 'video', value: 'background.mp4' }
             ],
             avatars: [
-                { name: 'Текущий', url: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg' },
-                { name: 'Аватар 2', url: 'https://i.pinimg.com/736x/ab/5d/10/ab5d10d5c2b15f9f54cffa9f5f15c5d5.jpg' }
+                { name: 'Текущий', url: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg' }
             ],
             cursors: [
-                { name: 'Стандартный', url: 'default' },
-                { name: 'Стрелка', url: 'https://cdn.custom-cursor.com/db/4646/32/arrow2692.png' },
-                { name: 'Игровой', url: 'https://cdn.custom-cursor.com/db/4645/32/arrow2691.png' }
+                { name: 'Стандартный', url: 'default' }
             ],
             colors: [
                 { name: 'Голубой', value: '#00b4d8' },
@@ -977,6 +1118,7 @@
             currentAvatar: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg',
             currentCursor: 'default',
             currentColor: '#00b4d8',
+            currentFont: '',
             profileName: 'mike nekrulov',
             profileBio: 'hey',
             links: [
@@ -1124,6 +1266,7 @@
                     currentAvatar: settings.currentAvatar,
                     currentCursor: settings.currentCursor,
                     currentColor: settings.currentColor,
+                    currentFont: settings.currentFont,
                     profileName: settings.profileName,
                     profileBio: settings.profileBio,
                     links: settings.links,
@@ -1184,8 +1327,8 @@
         function applySettings() {
             // Применяем цвет - создаем CSS переменные для разных оттенков
             const accentColor = settings.currentColor;
-            const accentColorShadow = accentColor + '40'; // добавляем прозрачность
-            const accentColorDark = adjustColor(accentColor, -20); // темнее на 20%
+            const accentColorShadow = accentColor + '40';
+            const accentColorDark = adjustColor(accentColor, -20);
             
             document.documentElement.style.setProperty('--accent-color', accentColor);
             document.documentElement.style.setProperty('--accent-color-shadow', accentColorShadow);
@@ -1208,6 +1351,17 @@
                 profileAvatar.src = settings.currentAvatar;
             }
 
+            // Применяем шрифт
+            if (settings.currentFont) {
+                document.body.style.fontFamily = 'CustomFont, Microsoft Sans Serif, sans-serif';
+                profileBio.style.fontFamily = 'CustomFont, Microsoft Sans Serif, sans-serif';
+                songArtist.style.fontFamily = 'CustomFont, Microsoft Sans Serif, sans-serif';
+            } else {
+                document.body.style.fontFamily = 'Microsoft Sans Serif, sans-serif';
+                profileBio.style.fontFamily = 'Microsoft Sans Serif, sans-serif';
+                songArtist.style.fontFamily = 'Microsoft Sans Serif, sans-serif';
+            }
+
             // Применяем имя и био
             if (settings.profileName) {
                 profileName.textContent = settings.profileName;
@@ -1222,7 +1376,6 @@
 
         // Функция для затемнения цвета
         function adjustColor(color, amount) {
-            // Если цвет в формате #RRGGBB
             if (color.startsWith('#')) {
                 let r = parseInt(color.substr(1, 2), 16);
                 let g = parseInt(color.substr(3, 2), 16);
@@ -1269,8 +1422,9 @@
                 const bgElement = document.createElement('div');
                 bgElement.className = `option-item ${bg.value === settings.currentBackground ? 'active' : ''}`;
                 bgElement.innerHTML = `
-                    <div style="width: 60px; height: 60px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 8px; margin-bottom: 6px;"></div>
+                    <div style="width: 70px; height: 70px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 10px; margin-bottom: 8px;"></div>
                     <div>${bg.name}</div>
+                    ${index > 3 ? `<button class="delete-btn" onclick="deleteBackground(${index})">×</button>` : ''}
                 `;
                 bgElement.onclick = () => selectBackground(bg.value);
                 backgroundOptions.appendChild(bgElement);
@@ -1286,6 +1440,7 @@
                 avatarElement.innerHTML = `
                     <img src="${avatar.url}" alt="${avatar.name}">
                     <div>${avatar.name}</div>
+                    ${index > 0 ? `<button class="delete-btn" onclick="deleteAvatar(${index})">×</button>` : ''}
                 `;
                 avatarElement.onclick = () => selectAvatar(avatar.url);
                 avatarOptions.appendChild(avatarElement);
@@ -1300,15 +1455,16 @@
                 cursorElement.className = `option-item ${cursor.url === settings.currentCursor ? 'active' : ''}`;
                 if (cursor.url === 'default') {
                     cursorElement.innerHTML = `
-                        <div style="width: 40px; height: 40px; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
-                            <i class="fas fa-mouse-pointer"></i>
+                        <div style="width: 50px; height: 50px; background: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
+                            <i class="fas fa-mouse-pointer" style="font-size: 20px;"></i>
                         </div>
                         <div>${cursor.name}</div>
                     `;
                 } else {
                     cursorElement.innerHTML = `
-                        <img src="${cursor.url}" style="width: 40px; height: 40px; object-fit: contain;">
+                        <img src="${cursor.url}" style="width: 50px; height: 50px; object-fit: contain;">
                         <div>${cursor.name}</div>
+                        <button class="delete-btn" onclick="deleteCursor(${index})">×</button>
                     `;
                 }
                 cursorElement.onclick = () => selectCursor(cursor.url);
@@ -1319,6 +1475,39 @@
         function initColorOptions() {
             const colorOptions = document.getElementById('color-options');
             // Colors are hardcoded in HTML
+        }
+
+        // Удаление фона
+        function deleteBackground(index) {
+            if (settings.backgrounds[index].value === settings.currentBackground) {
+                alert('Нельзя удалить текущий фон!');
+                return;
+            }
+            settings.backgrounds.splice(index, 1);
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Удаление аватара
+        function deleteAvatar(index) {
+            if (settings.avatars[index].url === settings.currentAvatar) {
+                alert('Нельзя удалить текущий аватар!');
+                return;
+            }
+            settings.avatars.splice(index, 1);
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Удаление курсора
+        function deleteCursor(index) {
+            if (settings.cursors[index].url === settings.currentCursor) {
+                alert('Нельзя удалить текущий курсор!');
+                return;
+            }
+            settings.cursors.splice(index, 1);
+            saveSettingsToSupabase();
+            initCustomizationMenu();
         }
 
         // Выбор фона
@@ -1340,7 +1529,6 @@
         // Выбор курсора
         function selectCursor(cursorUrl) {
             settings.currentCursor = cursorUrl;
-            // Курсор теперь остается стандартным для лучшей usability
             saveSettingsToSupabase();
             initCustomizationMenu();
         }
@@ -1350,6 +1538,7 @@
             settings.currentColor = color;
             applySettings();
             saveSettingsToSupabase();
+            initCustomizationMenu();
         }
 
         function selectCustomColor() {
@@ -1357,20 +1546,73 @@
             selectColor(color);
         }
 
-        // Добавление пользовательского курсора
-        function addCustomCursor() {
-            const url = document.getElementById('custom-cursor-url').value;
-            if (url) {
-                settings.cursors.push({
-                    name: 'Пользовательский',
-                    url: url
-                });
-                document.getElementById('custom-cursor-url').value = '';
-                saveSettingsToSupabase();
-                initCustomizationMenu();
-                alert('Курсор добавлен!');
-            }
+        // Сброс шрифта
+        function resetFont() {
+            settings.currentFont = '';
+            applySettings();
+            saveSettingsToSupabase();
+            alert('Шрифт сброшен!');
         }
+
+        // Загрузка файлов
+        document.getElementById('avatar-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newAvatar = {
+                        name: 'Загруженный аватар',
+                        url: e.target.result
+                    };
+                    settings.avatars.push(newAvatar);
+                    settings.currentAvatar = e.target.result;
+                    applySettings();
+                    saveSettingsToSupabase();
+                    initCustomizationMenu();
+                    alert('Аватар загружен!');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('cursor-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newCursor = {
+                        name: 'Загруженный курсор',
+                        url: e.target.result
+                    };
+                    settings.cursors.push(newCursor);
+                    settings.currentCursor = e.target.result;
+                    saveSettingsToSupabase();
+                    initCustomizationMenu();
+                    alert('Курсор загружен!');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('font-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const font = new FontFace('CustomFont', `url(${e.target.result})`);
+                    font.load().then(function(loadedFont) {
+                        document.fonts.add(loadedFont);
+                        settings.currentFont = e.target.result;
+                        applySettings();
+                        saveSettingsToSupabase();
+                        alert('Шрифт загружен и применен!');
+                    }).catch(function(error) {
+                        alert('Ошибка загрузки шрифта: ' + error);
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         // Обновление управления плейлистом
         function updatePlaylistManagement() {
@@ -1527,21 +1769,6 @@
             }
         }
 
-        // Добавление пользовательского аватара
-        function addCustomAvatar() {
-            const url = document.getElementById('custom-avatar-url').value;
-            if (url) {
-                settings.avatars.push({
-                    name: 'Пользовательский аватар',
-                    url: url
-                });
-                document.getElementById('custom-avatar-url').value = '';
-                saveSettingsToSupabase();
-                initCustomizationMenu();
-                alert('Аватар добавлен!');
-            }
-        }
-
         // Сохранение био
         function saveBio() {
             const bio = document.getElementById('custom-bio').value;
@@ -1695,7 +1922,6 @@
 
         // Обработчики для меню кастомизации
         document.getElementById('add-background').addEventListener('click', addCustomBackground);
-        document.getElementById('add-avatar').addEventListener('click', addCustomAvatar);
         document.getElementById('add-song').addEventListener('click', addNewSong);
         document.getElementById('add-link').addEventListener('click', addNewLink);
         document.getElementById('save-bio').addEventListener('click', saveBio);
