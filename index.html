@@ -5,21 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mike nekrulov | bio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Подключаем Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        @font-face {
-            font-family: 'CustomFont';
-            src: url('') format('woff2'),
-                 url('') format('woff');
-            font-display: swap;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: var(--custom-cursor, auto);
         }
 
         body {
@@ -33,12 +24,8 @@
             overflow: hidden;
             position: relative;
             font-family: 'Microsoft Sans Serif', sans-serif;
-            --accent-color: #00b4d8;
-            --accent-color-shadow: rgba(0, 180, 216, 0.6);
-            --accent-color-dark: #0096c7;
         }
 
-        /* Видео фон */
         .video-bg {
             position: fixed;
             top: 0;
@@ -47,10 +34,8 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
-            transition: opacity 0.5s ease;
         }
 
-        /* Затемнение фона для лучшей читаемости */
         .bg-overlay {
             position: fixed;
             top: 0;
@@ -72,7 +57,6 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             text-align: center;
             position: relative;
-            transition: transform 0.3s ease;
         }
 
         .profile-section {
@@ -85,9 +69,9 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-color);
+            border: 3px solid #00b4d8;
             margin: 0 auto 15px;
-            box-shadow: 0 0 25px var(--accent-color-shadow);
+            box-shadow: 0 0 25px rgba(0, 180, 216, 0.6);
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -111,7 +95,6 @@
             margin-bottom: 20px;
             font-style: italic;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-            font-family: var(--bio-font, 'Microsoft Sans Serif'), sans-serif;
         }
 
         .links-container {
@@ -137,24 +120,23 @@
         }
 
         .social-link:hover {
-            background: var(--accent-color);
+            background: #00b4d8;
             transform: scale(1.2);
             color: #000;
         }
 
-        /* Просмотры в правом верхнем углу страницы */
         .global-view-counter {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: var(--accent-color-shadow);
+            background: rgba(0, 180, 216, 0.6);
             padding: 8px 12px;
             border-radius: 15px;
             font-size: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
-            border: 1px solid var(--accent-color);
+            border: 1px solid #00b4d8;
             z-index: 999;
             backdrop-filter: blur(10px);
         }
@@ -225,7 +207,7 @@
         }
 
         .control-btn:hover {
-            color: var(--accent-color);
+            color: #00b4d8;
             transform: scale(1.1);
             background: rgba(0, 180, 216, 0.1);
         }
@@ -257,11 +239,11 @@
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-color), var(--accent-color-dark));
+            background: linear-gradient(90deg, #00b4d8, #0096c7);
             border-radius: 3px;
             width: 0%;
             transition: width 0.1s linear;
-            box-shadow: 0 0 10px var(--accent-color-shadow);
+            box-shadow: 0 0 10px rgba(0, 180, 216, 0.6);
         }
 
         .time-display {
@@ -289,7 +271,7 @@
         }
 
         .volume-icon:hover {
-            color: var(--accent-color);
+            color: #00b4d8;
             transform: scale(1.2);
         }
 
@@ -307,24 +289,23 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--accent-color);
+            background: #00b4d8;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 8px var(--accent-color-shadow);
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.6);
         }
 
         .volume-slider::-webkit-slider-thumb:hover {
-            background: var(--accent-color-dark);
+            background: #0096c7;
             transform: scale(1.2);
         }
 
-        /* Кнопка входа */
         .login-btn {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: var(--accent-color-shadow);
-            border: 1px solid var(--accent-color);
+            background: rgba(0, 180, 216, 0.6);
+            border: 1px solid #00b4d8;
             color: #fff;
             padding: 8px 15px;
             border-radius: 20px;
@@ -340,7 +321,6 @@
             transform: scale(1.05);
         }
 
-        /* Модальное окно входа */
         .modal {
             display: none;
             position: fixed;
@@ -361,7 +341,7 @@
             background: rgba(30, 30, 30, 0.95);
             padding: 30px;
             border-radius: 15px;
-            border: 1px solid var(--accent-color);
+            border: 1px solid #00b4d8;
             min-width: 300px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
@@ -369,7 +349,7 @@
         .modal h2 {
             margin-bottom: 20px;
             text-align: center;
-            color: var(--accent-color);
+            color: #00b4d8;
         }
 
         .input-group {
@@ -395,7 +375,7 @@
 
         .input-group input:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: #00b4d8;
         }
 
         .modal-buttons {
@@ -415,7 +395,7 @@
         }
 
         .modal-btn.primary {
-            background: var(--accent-color);
+            background: #00b4d8;
             color: #000;
         }
 
@@ -428,7 +408,6 @@
             transform: scale(1.05);
         }
 
-        /* Меню кастомизации */
         .customization-menu {
             display: none;
             position: fixed;
@@ -472,19 +451,14 @@
             margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .menu-section:hover {
-            transform: translateY(-2px);
         }
 
         .menu-section h3 {
-            color: var(--accent-color);
+            color: #00b4d8;
             margin-bottom: 15px;
             font-size: 18px;
             font-weight: 600;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px solid #00b4d8;
             padding-bottom: 8px;
         }
 
@@ -508,13 +482,13 @@
         }
 
         .option-item:hover {
-            border-color: var(--accent-color);
+            border-color: #00b4d8;
             transform: scale(1.05);
             background: rgba(0, 0, 0, 0.6);
         }
 
         .option-item.active {
-            border-color: var(--accent-color);
+            border-color: #00b4d8;
             background: rgba(0, 180, 216, 0.2);
         }
 
@@ -522,7 +496,7 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--accent-color);
+            background: #00b4d8;
             color: #000;
             font-size: 10px;
             padding: 2px 6px;
@@ -561,12 +535,6 @@
             border: 2px solid rgba(255,255,255,0.1);
         }
 
-        .option-item .song-cover {
-            width: 50px;
-            height: 50px;
-            border-radius: 6px;
-        }
-
         .color-option {
             width: 50px;
             height: 50px;
@@ -594,12 +562,12 @@
 
         .input-with-btn input:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: #00b4d8;
         }
 
         .input-with-btn button {
             padding: 10px 15px;
-            background: var(--accent-color);
+            background: #00b4d8;
             border: none;
             border-radius: 8px;
             color: #000;
@@ -612,7 +580,7 @@
 
         .input-with-btn button:hover {
             transform: scale(1.05);
-            background: var(--accent-color-dark);
+            background: #0096c7;
         }
 
         .song-item {
@@ -624,11 +592,6 @@
             border-radius: 8px;
             margin-bottom: 8px;
             font-size: 13px;
-            transition: background 0.3s;
-        }
-
-        .song-item:hover {
-            background: rgba(0, 0, 0, 0.6);
         }
 
         .song-item-info {
@@ -662,12 +625,12 @@
         }
 
         .action-btn.play {
-            background: var(--accent-color);
+            background: #00b4d8;
             color: black;
         }
 
         .action-btn.play:hover {
-            background: var(--accent-color-dark);
+            background: #0096c7;
             transform: scale(1.05);
         }
 
@@ -725,7 +688,7 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            background: var(--accent-color);
+            background: #00b4d8;
             color: #000;
             font-weight: 600;
             transition: all 0.3s;
@@ -733,23 +696,17 @@
 
         .small-btn:hover {
             transform: scale(1.05);
-            background: var(--accent-color-dark);
+            background: #0096c7;
         }
 
-        /* Анимация пульсации для аватара */
         @keyframes pulse {
-            0% { box-shadow: 0 0 20px var(--accent-color-shadow); }
-            50% { box-shadow: 0 0 30px var(--accent-color-shadow); }
-            100% { box-shadow: 0 0 20px var(--accent-color-shadow); }
+            0% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(0, 180, 216, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
         }
 
         .avatar {
             animation: pulse 3s infinite ease-in-out;
-        }
-
-        /* Стиль для загрузки */
-        .loading {
-            opacity: 0.7;
         }
 
         .error-message {
@@ -759,7 +716,6 @@
             text-align: center;
         }
 
-        /* Подпись в меню */
         .menu-footer {
             text-align: center;
             color: rgba(255, 255, 255, 0.5);
@@ -769,7 +725,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Загрузка файлов */
         .file-input-wrapper {
             position: relative;
             display: inline-block;
@@ -789,7 +744,7 @@
         .file-input-label {
             display: block;
             padding: 10px 15px;
-            background: var(--accent-color);
+            background: #00b4d8;
             color: #000;
             border-radius: 8px;
             text-align: center;
@@ -799,11 +754,10 @@
         }
 
         .file-input-label:hover {
-            background: var(--accent-color-dark);
+            background: #0096c7;
             transform: scale(1.05);
         }
 
-        /* Красивое поле для добавления песни */
         .add-song-form {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
@@ -813,7 +767,7 @@
         }
 
         .add-song-form h4 {
-            color: var(--accent-color);
+            color: #00b4d8;
             margin-bottom: 12px;
             font-size: 14px;
         }
@@ -834,18 +788,21 @@
 
         .form-group input:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: #00b4d8;
+        }
+
+        /* Динамические стили для цветов */
+        .dynamic-color {
+            transition: all 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <!-- Просмотры в правом верхнем углу страницы -->
     <div class="global-view-counter">
         <i class="fas fa-eye"></i>
         <span id="global-view-count">...</span>
     </div>
 
-    <!-- Видео фон -->
     <video class="video-bg" autoplay muted loop playsinline id="background-video">
         <source src="background.mp4" type="video/mp4">
         Ваш браузер не поддерживает видео.
@@ -906,7 +863,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно входа -->
     <div class="modal" id="login-modal">
         <div class="modal-content">
             <h2>Вход в панель управления</h2>
@@ -926,7 +882,6 @@
         </div>
     </div>
 
-    <!-- Меню кастомизации -->
     <div class="customization-menu" id="customization-menu">
         <div class="menu-header">
             <h2>Кастомизация</h2>
@@ -935,12 +890,9 @@
             </button>
         </div>
         <div class="menu-content">
-            <!-- Background Section -->
             <div class="menu-section">
                 <h3>background</h3>
-                <div class="customization-options" id="background-options">
-                    <!-- Опции фона будут добавлены динамически -->
-                </div>
+                <div class="customization-options" id="background-options"></div>
                 <div class="input-with-btn">
                     <input type="text" id="custom-background-url" placeholder="URL нового фона">
                     <button id="add-background">добавить фон</button>
@@ -951,58 +903,45 @@
                 </div>
             </div>
 
-            <!-- Avatar Section -->
             <div class="menu-section">
                 <h3>avatar</h3>
-                <div class="customization-options" id="avatar-options">
-                    <!-- Опции аватаров будут добавлены динамически -->
-                </div>
+                <div class="customization-options" id="avatar-options"></div>
                 <div class="file-input-wrapper">
                     <input type="file" id="avatar-file" accept="image/*">
                     <label for="avatar-file" class="file-input-label">Загрузить аватар</label>
                 </div>
             </div>
 
-            <!-- Color Section -->
             <div class="menu-section">
                 <h3>цвет сайта</h3>
-                <div class="customization-options" id="color-options">
-                    <!-- Цвета будут добавлены динамически -->
-                </div>
+                <div class="customization-options" id="color-options"></div>
                 <div class="input-with-btn">
                     <input type="color" id="custom-color" value="#00b4d8">
-                    <button onclick="selectCustomColor()">применить цвет</button>
+                    <button id="apply-custom-color">применить цвет</button>
                 </div>
             </div>
 
-            <!-- Cursor Section -->
             <div class="menu-section">
                 <h3>курсор</h3>
-                <div class="customization-options" id="cursor-options">
-                    <!-- Курсоры будут добавлены динамически -->
-                </div>
+                <div class="customization-options" id="cursor-options"></div>
                 <div class="file-input-wrapper">
                     <input type="file" id="cursor-file" accept=".png,.webp,.jpg,.jpeg,.cur">
                     <label for="cursor-file" class="file-input-label">Загрузить курсор</label>
                 </div>
             </div>
 
-            <!-- Font Section -->
             <div class="menu-section">
                 <h3>шрифт</h3>
                 <div class="file-input-wrapper">
                     <input type="file" id="font-file" accept=".woff,.woff2,.ttf,.otf">
                     <label for="font-file" class="file-input-label">Загрузить шрифт</label>
                 </div>
-                <button class="small-btn" onclick="resetFont()" style="width: 100%; margin-top: 10px;">Сбросить шрифт</button>
+                <button class="small-btn" id="reset-font" style="width: 100%; margin-top: 10px;">Сбросить шрифт</button>
             </div>
 
-            <!-- Playlist Section -->
             <div class="menu-section">
                 <h3>playlist</h3>
-                <div id="playlist-management">
-                    <!-- Список песен будет добавлен динамически -->
-                </div>
+                <div id="playlist-management"></div>
                 <div class="add-song-form">
                     <h4>Добавить новую песню</h4>
                     <div class="form-group">
@@ -1021,12 +960,9 @@
                 </div>
             </div>
 
-            <!-- Links Section -->
             <div class="menu-section">
                 <h3>links</h3>
-                <div id="links-management">
-                    <!-- Список ссылок будет добавлен динамически -->
-                </div>
+                <div id="links-management"></div>
                 <div class="add-song-form">
                     <h4>Добавить новую ссылку</h4>
                     <div class="form-group">
@@ -1042,7 +978,6 @@
                 </div>
             </div>
 
-            <!-- Description Section -->
             <div class="menu-section">
                 <h3>description</h3>
                 <div class="input-group">
@@ -1051,7 +986,6 @@
                 <button class="small-btn" id="save-bio" style="width: 100%;">изменить описание</button>
             </div>
 
-            <!-- Nickname Section -->
             <div class="menu-section">
                 <h3>nickname</h3>
                 <div class="input-group">
@@ -1063,20 +997,14 @@
         <div class="menu-footer">by mike nekrulov</div>
     </div>
 
-    <!-- Аудио элемент -->
-    <audio id="audio-player">
-        <!-- Источники будут установлены динамически -->
-    </audio>
+    <audio id="audio-player"></audio>
 
     <script>
         // Конфигурация Supabase
         const SUPABASE_URL = 'https://yuxkougslrauvnrvlrip.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1eGtvdWdzbHJhdXZucnZscmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwMjIxNTgsImV4cCI6MjA3NzU5ODE1OH0.cCo4gfxlTsJMvPn2Sx4ehC0VyUZavs8yV837ur6fias';
         
-        // Инициализация Supabase клиента
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Конфигурация администратора
         const ADMIN_IP = '37.194.230.100';
         const ADMIN_USERNAME = 'mikenekrulov';
         const ADMIN_PASSWORD = 'Grabis5252';
@@ -1194,7 +1122,6 @@
                 const userIP = await getUserIP();
                 const userAgent = navigator.userAgent;
 
-                // Проверяем, был ли уже просмотр с этого IP
                 const { data: existingViews, error: checkError } = await supabase
                     .from('page_views')
                     .select('id')
@@ -1206,7 +1133,6 @@
                     return false;
                 }
 
-                // Если просмотра с этого IP еще не было, сохраняем
                 if (existingViews.length === 0) {
                     const { data, error } = await supabase
                         .from('page_views')
@@ -1257,13 +1183,9 @@
         // Обновление счетчика просмотров
         async function updateViewCounter() {
             try {
-                // Сначала сохраняем текущий просмотр (если нужно)
                 await saveViewToSupabase();
-                
-                // Затем получаем общее количество просмотров
                 const totalViews = await getTotalViews();
                 globalViewCountEl.textContent = totalViews.toLocaleString();
-                
                 console.log('Текущее количество просмотров:', totalViews);
             } catch (error) {
                 console.error('Ошибка обновления счетчика:', error);
@@ -1330,7 +1252,6 @@
                     return false;
                 }
 
-                // Обновляем настройки из базы данных
                 const savedSettings = data.settings;
                 settings = { ...settings, ...savedSettings };
                 if (savedSettings.playlist) {
@@ -1345,16 +1266,12 @@
             }
         }
 
-        // Применение настроек
+        // ПРИМЕНЕНИЕ НАСТРОЕК - ИСПРАВЛЕННАЯ ФУНКЦИЯ
         function applySettings() {
-            // Применяем цвет
-            const accentColor = settings.currentColor;
-            const accentColorShadow = accentColor + '40';
-            const accentColorDark = adjustColor(accentColor, -20);
+            console.log('Применение настроек, текущий цвет:', settings.currentColor);
             
-            document.documentElement.style.setProperty('--accent-color', accentColor);
-            document.documentElement.style.setProperty('--accent-color-shadow', accentColorShadow);
-            document.documentElement.style.setProperty('--accent-color-dark', accentColorDark);
+            // Применяем цвет - ОСНОВНОЕ ИСПРАВЛЕНИЕ
+            applyColor(settings.currentColor);
 
             // Применяем фон
             if (settings.currentBackground) {
@@ -1375,16 +1292,16 @@
 
             // Применяем курсор
             if (settings.currentCursor && settings.currentCursor !== 'default') {
-                document.documentElement.style.setProperty('--custom-cursor', `url('${settings.currentCursor}'), auto`);
+                document.body.style.cursor = `url('${settings.currentCursor}'), auto`;
             } else {
-                document.documentElement.style.setProperty('--custom-cursor', 'auto');
+                document.body.style.cursor = 'auto';
             }
 
-            // Применяем шрифт только к био
+            // Применяем шрифт
             if (settings.currentFont) {
-                document.documentElement.style.setProperty('--bio-font', 'CustomFont');
+                document.body.style.fontFamily = 'CustomFont, sans-serif';
             } else {
-                document.documentElement.style.setProperty('--bio-font', 'Microsoft Sans Serif');
+                document.body.style.fontFamily = "'Microsoft Sans Serif', sans-serif";
             }
 
             // Применяем имя и био
@@ -1399,20 +1316,87 @@
             updateLinksDisplay();
         }
 
-        // Функция для затемнения цвета
-        function adjustColor(color, amount) {
-            if (color.startsWith('#')) {
-                let r = parseInt(color.substr(1, 2), 16);
-                let g = parseInt(color.substr(3, 2), 16);
-                let b = parseInt(color.substr(5, 2), 16);
-                
-                r = Math.max(0, Math.min(255, r + amount));
-                g = Math.max(0, Math.min(255, g + amount));
-                b = Math.max(0, Math.min(255, b + amount));
-                
-                return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА - НОВАЯ ФУНКЦИЯ
+        function applyColor(color) {
+            console.log('Применение цвета:', color);
+            
+            // Создаем затемненную версию цвета
+            function darkenColor(hex, percent) {
+                let r = parseInt(hex.slice(1, 3), 16);
+                let g = parseInt(hex.slice(3, 5), 16);
+                let b = parseInt(hex.slice(5, 7), 16);
+
+                r = Math.floor(r * (100 - percent) / 100);
+                g = Math.floor(g * (100 - percent) / 100);
+                b = Math.floor(b * (100 - percent) / 100);
+
+                return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
             }
-            return color;
+
+            const darkColor = darkenColor(color, 20);
+            const shadowColor = color + '40'; // прозрачность 25%
+
+            // Применяем ко всем элементам с цветом
+            const elementsToColor = [
+                // Аватар
+                { selector: '.avatar', properties: ['border-color', 'box-shadow'] },
+                
+                // Социальные ссылки
+                { selector: '.social-link:hover', properties: ['background-color'] },
+                
+                // Счетчик просмотров
+                { selector: '.global-view-counter', properties: ['background-color', 'border-color'] },
+                
+                // Кнопки плеера
+                { selector: '.control-btn:hover', properties: ['color'] },
+                { selector: '.play-pause', properties: ['background-color'] },
+                
+                // Прогресс-бар
+                { selector: '.progress', properties: ['background'] },
+                
+                // Ползунок громкости
+                { selector: '.volume-slider::-webkit-slider-thumb', properties: ['background'] },
+                { selector: '.volume-icon:hover', properties: ['color'] },
+                
+                // Кнопка входа
+                { selector: '.login-btn', properties: ['background-color', 'border-color'] },
+                
+                // Модальные окна
+                { selector: '.modal-content', properties: ['border-color'] },
+                { selector: '.modal h2', properties: ['color'] },
+                { selector: '.modal-btn.primary', properties: ['background-color'] },
+                
+                // Меню кастомизации
+                { selector: '.menu-section h3', properties: ['color', 'border-bottom-color'] },
+                { selector: '.option-item:hover', properties: ['border-color'] },
+                { selector: '.option-item.active', properties: ['border-color', 'background-color'] },
+                { selector: '.selected-badge', properties: ['background-color'] },
+                { selector: '.input-with-btn button', properties: ['background-color'] },
+                { selector: '.small-btn', properties: ['background-color'] },
+                { selector: '.file-input-label', properties: ['background-color'] },
+                { selector: '.add-song-form h4', properties: ['color'] },
+                { selector: '.action-btn.play', properties: ['background-color'] }
+            ];
+
+            // Применяем цвета через инлайн стили
+            elementsToColor.forEach(item => {
+                const elements = document.querySelectorAll(item.selector);
+                elements.forEach(element => {
+                    item.properties.forEach(property => {
+                        if (property === 'background') {
+                            element.style.background = `linear-gradient(90deg, ${color}, ${darkColor})`;
+                        } else if (property === 'box-shadow') {
+                            element.style.boxShadow = `0 0 25px ${shadowColor}`;
+                        } else {
+                            element.style[property] = color;
+                        }
+                    });
+                });
+            });
+
+            // Особые случаи
+            document.querySelector('.play-pause').style.background = shadowColor;
+            document.querySelector('.option-item.active').style.background = shadowColor;
         }
 
         // Обновление отображения ссылок
@@ -1578,14 +1562,16 @@
             initCustomizationMenu();
         }
 
-        // Выбор цвета
+        // ВЫБОР ЦВЕТА - ИСПРАВЛЕННАЯ ФУНКЦИЯ
         function selectColor(color) {
+            console.log('Выбран цвет:', color);
             settings.currentColor = color;
             applySettings();
             saveSettingsToSupabase();
             initCustomizationMenu();
         }
 
+        // Выбор пользовательского цвета
         function selectCustomColor() {
             const color = document.getElementById('custom-color').value;
             selectColor(color);
@@ -1782,7 +1768,6 @@
                 updatePlaylistManagement();
                 saveSettingsToSupabase();
                 
-                // Очищаем поля
                 document.getElementById('new-song-title').value = '';
                 document.getElementById('new-song-artist').value = '';
                 document.getElementById('new-song-cover').value = '';
@@ -1810,7 +1795,6 @@
                 updateLinksDisplay();
                 saveSettingsToSupabase();
                 
-                // Очищаем поля
                 document.getElementById('new-link-name').value = '';
                 document.getElementById('new-link-url').value = '';
                 document.getElementById('new-link-icon').value = '';
@@ -1994,6 +1978,8 @@
         document.getElementById('add-link').addEventListener('click', addNewLink);
         document.getElementById('save-bio').addEventListener('click', saveBio);
         document.getElementById('save-name').addEventListener('click', saveName);
+        document.getElementById('apply-custom-color').addEventListener('click', selectCustomColor);
+        document.getElementById('reset-font').addEventListener('click', resetFont);
 
         // Вспомогательные функции
         function showModal(modal) {
@@ -2006,17 +1992,26 @@
 
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', async function() {
-            // Сначала скрываем кнопку Admin
             loginBtn.style.display = 'none';
-            
-            // Затем проверяем права и загружаем настройки
             await checkAdminAccess();
             await loadSettingsFromSupabase();
-            
-            // Инициализируем плеер и счетчик просмотров
             initPlayer();
             await updateViewCounter();
         });
+
+        // Глобальные функции для вызова из HTML
+        window.playSong = playSong;
+        window.removeSong = removeSong;
+        window.removeLink = removeLink;
+        window.deleteBackground = deleteBackground;
+        window.deleteAvatar = deleteAvatar;
+        window.deleteCursor = deleteCursor;
+        window.selectBackground = selectBackground;
+        window.selectAvatar = selectAvatar;
+        window.selectCursor = selectCursor;
+        window.selectColor = selectColor;
+        window.selectCustomColor = selectCustomColor;
+        window.resetFont = resetFont;
     </script>
 </body>
 </html>
