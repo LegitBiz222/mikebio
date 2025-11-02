@@ -19,6 +19,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: var(--custom-cursor, auto);
         }
 
         body {
@@ -110,7 +111,7 @@
             margin-bottom: 20px;
             font-style: italic;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-            font-family: inherit;
+            font-family: var(--bio-font, 'Microsoft Sans Serif'), sans-serif;
         }
 
         .links-container {
@@ -199,7 +200,7 @@
         .song-artist {
             font-size: 12px;
             color: #b0b0b0;
-            font-family: inherit;
+            font-family: 'Microsoft Sans Serif', sans-serif;
         }
 
         .player-controls {
@@ -452,12 +453,19 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
+        .menu-author {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
         .menu-content {
             padding: 25px;
             max-width: 900px;
             margin: 0 auto;
             position: relative;
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - 150px);
         }
 
         .menu-section {
@@ -513,8 +521,7 @@
             background: rgba(0, 180, 216, 0.2);
         }
 
-        .option-item.active::after {
-            content: 'Выбран';
+        .selected-badge {
             position: absolute;
             top: -8px;
             right: -8px;
@@ -524,6 +531,7 @@
             padding: 2px 6px;
             border-radius: 10px;
             font-weight: bold;
+            z-index: 2;
         }
 
         .delete-btn {
@@ -540,6 +548,7 @@
             cursor: pointer;
             opacity: 0;
             transition: opacity 0.3s;
+            z-index: 3;
         }
 
         .option-item:hover .delete-btn {
@@ -753,16 +762,6 @@
             text-align: center;
         }
 
-        /* Подпись в меню */
-        .menu-footer {
-            position: absolute;
-            bottom: 20px;
-            right: 25px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 12px;
-            font-style: italic;
-        }
-
         /* Загрузка файлов */
         .file-input-wrapper {
             position: relative;
@@ -888,6 +887,7 @@
     <div class="customization-menu" id="customization-menu">
         <div class="menu-header">
             <h2>Панель управления</h2>
+            <div class="menu-author">by mike nekrulov</div>
             <button class="close-menu" id="close-menu">
                 <i class="fas fa-times"></i>
             </button>
@@ -921,26 +921,7 @@
             <div class="menu-section">
                 <h3>цвет сайта</h3>
                 <div class="customization-options" id="color-options">
-                    <div class="option-item" onclick="selectColor('#00b4d8')">
-                        <div class="color-option" style="background: #00b4d8"></div>
-                        <div>Голубой</div>
-                    </div>
-                    <div class="option-item" onclick="selectColor('#ff6b6b')">
-                        <div class="color-option" style="background: #ff6b6b"></div>
-                        <div>Красный</div>
-                    </div>
-                    <div class="option-item" onclick="selectColor('#51cf66')">
-                        <div class="color-option" style="background: #51cf66"></div>
-                        <div>Зеленый</div>
-                    </div>
-                    <div class="option-item" onclick="selectColor('#ffd43b')">
-                        <div class="color-option" style="background: #ffd43b"></div>
-                        <div>Желтый</div>
-                    </div>
-                    <div class="option-item" onclick="selectColor('#cc5de8')">
-                        <div class="color-option" style="background: #cc5de8"></div>
-                        <div>Фиолетовый</div>
-                    </div>
+                    <!-- Цвета будут добавлены динамически -->
                 </div>
                 <div class="input-with-btn">
                     <input type="color" id="custom-color" value="#00b4d8">
@@ -952,12 +933,7 @@
             <div class="menu-section">
                 <h3>курсор</h3>
                 <div class="customization-options" id="cursor-options">
-                    <div class="option-item active" onclick="selectCursor('default')">
-                        <div style="width: 50px; height: 50px; background: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
-                            <i class="fas fa-mouse-pointer" style="font-size: 20px;"></i>
-                        </div>
-                        <div>Стандартный</div>
-                    </div>
+                    <!-- Курсоры будут добавлены динамически -->
                 </div>
                 <div class="file-input-wrapper">
                     <input type="file" id="cursor-file" accept=".png,.webp,.jpg,.jpeg,.cur">
@@ -1038,7 +1014,6 @@
                 <button class="small-btn" id="save-name" style="width: 100%;">изменить ник</button>
             </div>
         </div>
-        <div class="menu-footer">by mike nekrulov</div>
     </div>
 
     <!-- Аудио элемент -->
@@ -1325,7 +1300,7 @@
 
         // Применение настроек
         function applySettings() {
-            // Применяем цвет - создаем CSS переменные для разных оттенков
+            // Применяем цвет
             const accentColor = settings.currentColor;
             const accentColorShadow = accentColor + '40';
             const accentColorDark = adjustColor(accentColor, -20);
@@ -1351,15 +1326,18 @@
                 profileAvatar.src = settings.currentAvatar;
             }
 
-            // Применяем шрифт
-            if (settings.currentFont) {
-                document.body.style.fontFamily = 'CustomFont, Microsoft Sans Serif, sans-serif';
-                profileBio.style.fontFamily = 'CustomFont, Microsoft Sans Serif, sans-serif';
-                songArtist.style.fontFamily = 'CustomFont, Microsoft Sans Serif, sans-serif';
+            // Применяем курсор
+            if (settings.currentCursor && settings.currentCursor !== 'default') {
+                document.documentElement.style.setProperty('--custom-cursor', `url('${settings.currentCursor}'), auto`);
             } else {
-                document.body.style.fontFamily = 'Microsoft Sans Serif, sans-serif';
-                profileBio.style.fontFamily = 'Microsoft Sans Serif, sans-serif';
-                songArtist.style.fontFamily = 'Microsoft Sans Serif, sans-serif';
+                document.documentElement.style.setProperty('--custom-cursor', 'auto');
+            }
+
+            // Применяем шрифт только к био
+            if (settings.currentFont) {
+                document.documentElement.style.setProperty('--bio-font', 'CustomFont');
+            } else {
+                document.documentElement.style.setProperty('--bio-font', 'Microsoft Sans Serif');
             }
 
             // Применяем имя и био
@@ -1420,10 +1398,12 @@
             backgroundOptions.innerHTML = '';
             settings.backgrounds.forEach((bg, index) => {
                 const bgElement = document.createElement('div');
-                bgElement.className = `option-item ${bg.value === settings.currentBackground ? 'active' : ''}`;
+                const isActive = bg.value === settings.currentBackground;
+                bgElement.className = `option-item ${isActive ? 'active' : ''}`;
                 bgElement.innerHTML = `
                     <div style="width: 70px; height: 70px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 10px; margin-bottom: 8px;"></div>
                     <div>${bg.name}</div>
+                    ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
                     ${index > 3 ? `<button class="delete-btn" onclick="deleteBackground(${index})">×</button>` : ''}
                 `;
                 bgElement.onclick = () => selectBackground(bg.value);
@@ -1436,10 +1416,12 @@
             avatarOptions.innerHTML = '';
             settings.avatars.forEach((avatar, index) => {
                 const avatarElement = document.createElement('div');
-                avatarElement.className = `option-item ${avatar.url === settings.currentAvatar ? 'active' : ''}`;
+                const isActive = avatar.url === settings.currentAvatar;
+                avatarElement.className = `option-item ${isActive ? 'active' : ''}`;
                 avatarElement.innerHTML = `
                     <img src="${avatar.url}" alt="${avatar.name}">
                     <div>${avatar.name}</div>
+                    ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
                     ${index > 0 ? `<button class="delete-btn" onclick="deleteAvatar(${index})">×</button>` : ''}
                 `;
                 avatarElement.onclick = () => selectAvatar(avatar.url);
@@ -1452,18 +1434,21 @@
             cursorOptions.innerHTML = '';
             settings.cursors.forEach((cursor, index) => {
                 const cursorElement = document.createElement('div');
-                cursorElement.className = `option-item ${cursor.url === settings.currentCursor ? 'active' : ''}`;
+                const isActive = cursor.url === settings.currentCursor;
+                cursorElement.className = `option-item ${isActive ? 'active' : ''}`;
                 if (cursor.url === 'default') {
                     cursorElement.innerHTML = `
                         <div style="width: 50px; height: 50px; background: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
                             <i class="fas fa-mouse-pointer" style="font-size: 20px;"></i>
                         </div>
                         <div>${cursor.name}</div>
+                        ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
                     `;
                 } else {
                     cursorElement.innerHTML = `
                         <img src="${cursor.url}" style="width: 50px; height: 50px; object-fit: contain;">
                         <div>${cursor.name}</div>
+                        ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
                         <button class="delete-btn" onclick="deleteCursor(${index})">×</button>
                     `;
                 }
@@ -1474,7 +1459,19 @@
 
         function initColorOptions() {
             const colorOptions = document.getElementById('color-options');
-            // Colors are hardcoded in HTML
+            colorOptions.innerHTML = '';
+            settings.colors.forEach((color, index) => {
+                const colorElement = document.createElement('div');
+                const isActive = color.value === settings.currentColor;
+                colorElement.className = `option-item ${isActive ? 'active' : ''}`;
+                colorElement.innerHTML = `
+                    <div class="color-option" style="background: ${color.value}"></div>
+                    <div>${color.name}</div>
+                    ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
+                `;
+                colorElement.onclick = () => selectColor(color.value);
+                colorOptions.appendChild(colorElement);
+            });
         }
 
         // Удаление фона
@@ -1529,6 +1526,7 @@
         // Выбор курсора
         function selectCursor(cursorUrl) {
             settings.currentCursor = cursorUrl;
+            applySettings();
             saveSettingsToSupabase();
             initCustomizationMenu();
         }
@@ -1586,6 +1584,7 @@
                     };
                     settings.cursors.push(newCursor);
                     settings.currentCursor = e.target.result;
+                    applySettings();
                     saveSettingsToSupabase();
                     initCustomizationMenu();
                     alert('Курсор загружен!');
