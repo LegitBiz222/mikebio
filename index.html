@@ -790,6 +790,13 @@
             outline: none;
             border-color: #00b4d8;
         }
+
+        .song-url-preview {
+            font-size: 10px;
+            color: #888;
+            margin-top: 2px;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -949,7 +956,8 @@
                         <input type="text" id="new-song-cover" placeholder="URL обложки">
                     </div>
                     <div class="form-group">
-                        <input type="text" id="new-song-url" placeholder="URL аудио файла">
+                        <input type="text" id="new-song-url" placeholder="URL аудио файла (mp3, ogg, wav)">
+                        <div class="song-url-preview" id="song-url-preview"></div>
                     </div>
                     <button class="small-btn" id="add-song" style="width: 100%;">добавить песню</button>
                 </div>
@@ -1071,19 +1079,19 @@
             ]
         };
 
-        // Плейлист
+        // Плейлист по умолчанию с работающими URL
         let playlist = [
             {
                 title: "типичная ситуация",
                 artist: "madk1d",
-                cover: "music1icon.jpg",
-                src: "music1.mp3"
+                cover: "https://via.placeholder.com/50/333333/FFFFFF?text=Cover1",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             },
             {
                 title: "infinite void",
                 artist: "kur0iwa", 
-                cover: "music2icon.jpg",
-                src: "music2.mp3"
+                cover: "https://via.placeholder.com/50/333333/FFFFFF?text=Cover2",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
             }
         ];
 
@@ -1261,7 +1269,7 @@
             }
         }
 
-        // ПРИМЕНЕНИЕ НАСТРОЕК - ИСПРАВЛЕННАЯ ФУНКЦИЯ
+        // ПРИМЕНЕНИЕ НАСТРОЕК
         function applySettings() {
             console.log('Применение настроек, текущий цвет:', settings.currentColor);
             
@@ -1311,7 +1319,7 @@
             updateLinksDisplay();
         }
 
-        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА - ПОЛНОСТЬЮ ПЕРЕПИСАНА
+        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА
         function applyColor(color) {
             console.log('Применение цвета:', color);
             
@@ -1329,8 +1337,8 @@
             }
 
             const darkColor = darkenColor(color, 20);
-            const shadowColor = color + '40'; // прозрачность 25%
-            const lightShadowColor = color + '80'; // более яркая тень для аватара
+            const shadowColor = color + '40';
+            const lightShadowColor = color + '80';
 
             // 1. АВАТАР - свечение под аватаром
             const avatar = document.querySelector('.avatar');
@@ -1392,8 +1400,6 @@
             progress.style.boxShadow = `0 0 10px ${shadowColor}`;
 
             // 6. ПОЛЗУНОК ГРОМКОСТИ
-            const volumeThumb = document.querySelector('.volume-slider::-webkit-slider-thumb');
-            // Создаем новый стиль для ползунка громкости
             const volumeStyle = document.createElement('style');
             volumeStyle.id = 'volume-slider-style';
             volumeStyle.textContent = `
@@ -1887,29 +1893,69 @@
             saveSettingsToSupabase();
         }
 
-        // Добавление новой песни
-        function addNewSong() {
+        // ПРОВЕРКА ДОСТУПНОСТИ АУДИО ФАЙЛА
+        function checkAudioURL(url) {
+            return new Promise((resolve) => {
+                const audio = new Audio();
+                audio.src = url;
+                audio.addEventListener('canplaythrough', () => resolve(true));
+                audio.addEventListener('error', () => resolve(false));
+                // Таймаут на случай если события не сработают
+                setTimeout(() => resolve(false), 5000);
+            });
+        }
+
+        // ДОБАВЛЕНИЕ НОВОЙ ПЕСНИ - ИСПРАВЛЕННАЯ ФУНКЦИЯ
+        async function addNewSong() {
             const title = document.getElementById('new-song-title').value;
             const artist = document.getElementById('new-song-artist').value;
             const cover = document.getElementById('new-song-cover').value;
             const url = document.getElementById('new-song-url').value;
 
             if (title && artist && cover && url) {
-                playlist.push({
-                    title: title,
-                    artist: artist,
-                    cover: cover,
-                    src: url
-                });
-                updatePlaylistManagement();
-                saveSettingsToSupabase();
-                
-                document.getElementById('new-song-title').value = '';
-                document.getElementById('new-song-artist').value = '';
-                document.getElementById('new-song-cover').value = '';
-                document.getElementById('new-song-url').value = '';
-                
-                alert('Песня добавлена в плейлист!');
+                // Показываем загрузку
+                const addButton = document.getElementById('add-song');
+                const originalText = addButton.textContent;
+                addButton.textContent = 'Проверка URL...';
+                addButton.disabled = true;
+
+                try {
+                    // Проверяем доступность аудио файла
+                    const isAudioValid = await checkAudioURL(url);
+                    
+                    if (!isAudioValid) {
+                        alert('Ошибка: Аудио файл по указанному URL недоступен или не поддерживается. Пожалуйста, проверьте URL.');
+                        addButton.textContent = originalText;
+                        addButton.disabled = false;
+                        return;
+                    }
+
+                    // Добавляем песню в плейлист
+                    playlist.push({
+                        title: title,
+                        artist: artist,
+                        cover: cover,
+                        src: url
+                    });
+                    
+                    updatePlaylistManagement();
+                    saveSettingsToSupabase();
+                    
+                    // Очищаем поля
+                    document.getElementById('new-song-title').value = '';
+                    document.getElementById('new-song-artist').value = '';
+                    document.getElementById('new-song-cover').value = '';
+                    document.getElementById('new-song-url').value = '';
+                    document.getElementById('song-url-preview').textContent = '';
+                    
+                    alert('Песня добавлена в плейлист!');
+                    
+                } catch (error) {
+                    alert('Ошибка при проверке аудио файла: ' + error.message);
+                } finally {
+                    addButton.textContent = originalText;
+                    addButton.disabled = false;
+                }
             } else {
                 alert('Заполните все поля!');
             }
@@ -1994,8 +2040,11 @@
             songTitle.textContent = song.title;
             songArtist.textContent = song.artist;
             albumCover.src = song.cover;
+            
+            // Устанавливаем источник аудио
             audioPlayer.src = song.src;
             audioPlayer.load();
+            
             currentTimeEl.textContent = "0:00";
             progressBar.style.width = "0%";
             
@@ -2004,6 +2053,12 @@
                 const totalSeconds = Math.floor(audioPlayer.duration % 60);
                 totalTimeEl.textContent = `${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}`;
             });
+
+            // Обработчик ошибок загрузки аудио
+            audioPlayer.addEventListener('error', function(e) {
+                console.error('Ошибка загрузки аудио:', e);
+                alert('Ошибка загрузки аудио файла. Проверьте URL или попробуйте другой файл.');
+            });
         }
 
         function togglePlay() {
@@ -2011,7 +2066,10 @@
                 audioPlayer.pause();
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             } else {
-                audioPlayer.play();
+                audioPlayer.play().catch(error => {
+                    console.error('Ошибка воспроизведения:', error);
+                    alert('Ошибка воспроизведения аудио. Проверьте URL файла.');
+                });
                 playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             }
             isPlaying = !isPlaying;
@@ -2078,6 +2136,17 @@
             const duration = audioPlayer.duration;
             audioPlayer.currentTime = (clickX / width) * duration;
         }
+
+        // Превью URL песни
+        document.getElementById('new-song-url').addEventListener('input', function() {
+            const url = this.value;
+            const preview = document.getElementById('song-url-preview');
+            if (url) {
+                preview.textContent = `URL: ${url.substring(0, 50)}${url.length > 50 ? '...' : ''}`;
+            } else {
+                preview.textContent = '';
+            }
+        });
 
         // Обработчики событий
         playPauseBtn.addEventListener('click', togglePlay);
