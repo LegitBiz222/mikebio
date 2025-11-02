@@ -13,7 +13,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            cursor: var(--custom-cursor, auto);
         }
 
         body {
@@ -26,7 +25,6 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
-            --accent-color: #00b4d8;
         }
 
         /* Видео фон */
@@ -76,9 +74,9 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-color);
+            border: 3px solid var(--accent-color, #00b4d8);
             margin: 0 auto 15px;
-            box-shadow: 0 0 25px rgba(0, 180, 216, 0.6);
+            box-shadow: 0 0 25px var(--accent-color-shadow, rgba(0, 180, 216, 0.6));
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -126,7 +124,7 @@
         }
 
         .social-link:hover {
-            background: var(--accent-color);
+            background: var(--accent-color, #00b4d8);
             transform: scale(1.2);
             color: #000;
         }
@@ -135,21 +133,21 @@
             position: absolute;
             top: 0;
             right: 0;
-            background: rgba(0, 180, 216, 0.3);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.3));
             padding: 5px 10px;
             border-radius: 15px;
             font-size: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
-            border: 1px solid rgba(0, 180, 216, 0.5);
+            border: 1px solid var(--accent-color, #00b4d8);
         }
 
         .music-player {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             padding: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -209,14 +207,14 @@
         }
 
         .control-btn:hover {
-            color: var(--accent-color);
+            color: var(--accent-color, #00b4d8);
             transform: scale(1.1);
-            background: rgba(0, 180, 216, 0.1);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.1));
         }
 
         .play-pause {
             font-size: 28px;
-            background: rgba(0, 180, 216, 0.2);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.2));
             width: 50px;
             height: 50px;
             display: flex;
@@ -241,11 +239,11 @@
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-color), #0096c7);
+            background: linear-gradient(90deg, var(--accent-color, #00b4d8), var(--accent-color-dark, #0096c7));
             border-radius: 3px;
             width: 0%;
             transition: width 0.1s linear;
-            box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+            box-shadow: 0 0 10px var(--accent-color-shadow, rgba(0, 180, 216, 0.5));
         }
 
         .time-display {
@@ -272,7 +270,7 @@
         }
 
         .volume-icon:hover {
-            color: var(--accent-color);
+            color: var(--accent-color, #00b4d8);
             transform: scale(1.2);
         }
 
@@ -290,36 +288,15 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--accent-color);
+            background: var(--accent-color, #00b4d8);
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 8px rgba(0, 180, 216, 0.6);
+            box-shadow: 0 0 8px var(--accent-color-shadow, rgba(0, 180, 216, 0.6));
         }
 
         .volume-slider::-webkit-slider-thumb:hover {
-            background: #0096c7;
+            background: var(--accent-color-dark, #0096c7);
             transform: scale(1.2);
-        }
-
-        .telegram-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            color: #fff;
-            font-size: 40px;
-            transition: all 0.3s;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .telegram-link:hover {
-            color: var(--accent-color);
-            transform: scale(1.2);
-            background: rgba(0, 180, 216, 0.2);
-            box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
         }
 
         /* Кнопка входа */
@@ -327,8 +304,8 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(0, 180, 216, 0.3);
-            border: 1px solid rgba(0, 180, 216, 0.5);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.3));
+            border: 1px solid var(--accent-color, #00b4d8);
             color: #fff;
             padding: 8px 15px;
             border-radius: 20px;
@@ -339,7 +316,7 @@
         }
 
         .login-btn:hover {
-            background: rgba(0, 180, 216, 0.5);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.5));
             transform: scale(1.05);
         }
 
@@ -364,7 +341,7 @@
             background: rgba(30, 30, 30, 0.95);
             padding: 30px;
             border-radius: 15px;
-            border: 1px solid rgba(0, 180, 216, 0.5);
+            border: 1px solid var(--accent-color, #00b4d8);
             min-width: 300px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
@@ -372,7 +349,7 @@
         .modal h2 {
             margin-bottom: 20px;
             text-align: center;
-            color: var(--accent-color);
+            color: var(--accent-color, #00b4d8);
         }
 
         .input-group {
@@ -398,7 +375,7 @@
 
         .input-group input:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: var(--accent-color, #00b4d8);
         }
 
         .modal-buttons {
@@ -418,7 +395,7 @@
         }
 
         .modal-btn.primary {
-            background: var(--accent-color);
+            background: var(--accent-color, #00b4d8);
             color: #000;
         }
 
@@ -446,10 +423,10 @@
         }
 
         .menu-header {
-            background: rgba(0, 180, 216, 0.2);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.2));
             padding: 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(0, 180, 216, 0.5);
+            border-bottom: 1px solid var(--accent-color, #00b4d8);
         }
 
         .menu-content {
@@ -467,7 +444,7 @@
         }
 
         .menu-section h3 {
-            color: var(--accent-color);
+            color: var(--accent-color, #00b4d8);
             margin-bottom: 12px;
             font-size: 16px;
         }
@@ -491,13 +468,13 @@
         }
 
         .option-item:hover {
-            border-color: var(--accent-color);
+            border-color: var(--accent-color, #00b4d8);
             transform: scale(1.05);
         }
 
         .option-item.active {
-            border-color: var(--accent-color);
-            background: rgba(0, 180, 216, 0.2);
+            border-color: var(--accent-color, #00b4d8);
+            background: var(--accent-color-shadow, rgba(0, 180, 216, 0.2));
         }
 
         .option-item img {
@@ -540,7 +517,7 @@
 
         .input-with-btn button {
             padding: 8px 12px;
-            background: var(--accent-color);
+            background: var(--accent-color, #00b4d8);
             border: none;
             border-radius: 6px;
             color: #000;
@@ -586,7 +563,7 @@
         }
 
         .action-btn.play {
-            background: var(--accent-color);
+            background: var(--accent-color, #00b4d8);
             color: black;
         }
 
@@ -626,7 +603,7 @@
         }
 
         .close-menu:hover {
-            color: var(--accent-color);
+            color: var(--accent-color, #00b4d8);
             transform: scale(1.2);
         }
 
@@ -636,7 +613,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            background: var(--accent-color);
+            background: var(--accent-color, #00b4d8);
             color: #000;
             font-weight: 600;
             transition: all 0.3s;
@@ -648,9 +625,9 @@
 
         /* Анимация пульсации для аватара */
         @keyframes pulse {
-            0% { box-shadow: 0 0 20px var(--accent-color); }
-            50% { box-shadow: 0 0 30px var(--accent-color); }
-            100% { box-shadow: 0 0 20px var(--accent-color); }
+            0% { box-shadow: 0 0 20px var(--accent-color-shadow, rgba(0, 180, 216, 0.6)); }
+            50% { box-shadow: 0 0 30px var(--accent-color-shadow, rgba(0, 180, 216, 0.8)); }
+            100% { box-shadow: 0 0 20px var(--accent-color-shadow, rgba(0, 180, 216, 0.6)); }
         }
 
         .avatar {
@@ -743,10 +720,7 @@
             </div>
         </div>
         
-        <!-- Иконка телеграмма -->
-        <a href="https://t.me/mosc8n" target="_blank" class="telegram-link">
-            <i class="fab fa-telegram-plane"></i>
-        </a>
+        <!-- Иконка телеграмма УБРАНА -->
     </div>
 
     <!-- Модальное окно входа -->
@@ -1125,8 +1099,14 @@
 
         // Применение настроек
         function applySettings() {
-            // Применяем цвет
-            document.documentElement.style.setProperty('--accent-color', settings.currentColor);
+            // Применяем цвет - создаем CSS переменные для разных оттенков
+            const accentColor = settings.currentColor;
+            const accentColorShadow = accentColor + '40'; // добавляем прозрачность
+            const accentColorDark = adjustColor(accentColor, -20); // темнее на 20%
+            
+            document.documentElement.style.setProperty('--accent-color', accentColor);
+            document.documentElement.style.setProperty('--accent-color-shadow', accentColorShadow);
+            document.documentElement.style.setProperty('--accent-color-dark', accentColorDark);
 
             // Применяем фон
             if (settings.currentBackground) {
@@ -1145,13 +1125,6 @@
                 profileAvatar.src = settings.currentAvatar;
             }
 
-            // Применяем курсор
-            if (settings.currentCursor && settings.currentCursor !== 'default') {
-                document.documentElement.style.setProperty('--custom-cursor', `url('${settings.currentCursor}'), auto`);
-            } else {
-                document.documentElement.style.setProperty('--custom-cursor', 'auto');
-            }
-
             // Применяем имя и био
             if (settings.profileName) {
                 profileName.textContent = settings.profileName;
@@ -1162,6 +1135,23 @@
 
             // Применяем ссылки
             updateLinksDisplay();
+        }
+
+        // Функция для затемнения цвета
+        function adjustColor(color, amount) {
+            // Если цвет в формате #RRGGBB
+            if (color.startsWith('#')) {
+                let r = parseInt(color.substr(1, 2), 16);
+                let g = parseInt(color.substr(3, 2), 16);
+                let b = parseInt(color.substr(5, 2), 16);
+                
+                r = Math.max(0, Math.min(255, r + amount));
+                g = Math.max(0, Math.min(255, g + amount));
+                b = Math.max(0, Math.min(255, b + amount));
+                
+                return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+            return color;
         }
 
         // Обновление отображения ссылок
@@ -1267,7 +1257,7 @@
         // Выбор курсора
         function selectCursor(cursorUrl) {
             settings.currentCursor = cursorUrl;
-            applySettings();
+            // Курсор теперь остается стандартным для лучшей usability
             saveSettingsToSupabase();
             initCustomizationMenu();
         }
@@ -1493,35 +1483,6 @@
             }
         }
 
-        // Эффекты курсора
-        function createCursorEffect(x, y) {
-            if (settings.currentColor && Math.random() > 0.7) {
-                const effect = document.createElement('div');
-                effect.className = 'cursor-effect';
-                effect.style.left = x + 'px';
-                effect.style.top = y + 'px';
-                effect.style.width = '4px';
-                effect.style.height = '4px';
-                effect.style.background = settings.currentColor;
-                effect.style.borderRadius = '50%';
-                effect.style.boxShadow = `0 0 10px ${settings.currentColor}`;
-                
-                document.body.appendChild(effect);
-                
-                cursorEffects.push(effect);
-                
-                setTimeout(() => {
-                    effect.style.transform = 'scale(2)';
-                    effect.style.opacity = '0';
-                }, 10);
-                
-                setTimeout(() => {
-                    document.body.removeChild(effect);
-                    cursorEffects = cursorEffects.filter(e => e !== effect);
-                }, 1000);
-            }
-        }
-
         // Функции музыкального плеера
         function initPlayer() {
             loadSong(currentSongIndex);
@@ -1657,11 +1618,6 @@
         document.getElementById('save-bio').addEventListener('click', saveBio);
         document.getElementById('save-name').addEventListener('click', saveName);
 
-        // Обработчик движения мыши для эффектов
-        document.addEventListener('mousemove', (e) => {
-            createCursorEffect(e.clientX, e.clientY);
-        });
-
         // Вспомогательные функции
         function showModal(modal) {
             modal.style.display = 'block';
@@ -1675,14 +1631,8 @@
         document.addEventListener('DOMContentLoaded', async function() {
             await checkAdminAccess();
             await loadSettingsFromSupabase();
-            loadPlaylist();
             initPlayer();
         });
-
-        // Загрузка плейлиста
-        function loadPlaylist() {
-            // Playlist is now loaded from Supabase
-        }
     </script>
 </body>
 </html>
