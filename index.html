@@ -313,6 +313,7 @@
             font-size: 12px;
             transition: all 0.3s;
             backdrop-filter: blur(10px);
+            display: none; /* Скрыта по умолчанию */
         }
 
         .login-btn:hover {
@@ -677,7 +678,7 @@
             </div>
             <div class="view-counter">
                 <i class="fas fa-eye"></i>
-                <span id="view-count">0</span>
+                <span id="view-count">...</span>
             </div>
         </div>
         
@@ -719,8 +720,6 @@
                 <input type="range" min="0" max="100" value="70" class="volume-slider" id="volume-slider">
             </div>
         </div>
-        
-        <!-- Иконка телеграмма УБРАНА -->
     </div>
 
     <!-- Модальное окно входа -->
@@ -1016,12 +1015,96 @@
         // Проверка прав администратора
         async function checkAdminAccess() {
             userIP = await getUserIP();
+            console.log('IP пользователя:', userIP);
             if (userIP === ADMIN_IP) {
                 loginBtn.style.display = 'block';
                 return true;
             }
             loginBtn.style.display = 'none';
             return false;
+        }
+
+        // Сохранение просмотра в Supabase
+        async function saveViewToSupabase() {
+            try {
+                const userIP = await getUserIP();
+                const userAgent = navigator.userAgent;
+
+                // Проверяем, был ли уже просмотр с этого IP
+                const { data: existingViews, error: checkError } = await supabase
+                    .from('page_views')
+                    .select('id')
+                    .eq('ip_address', userIP)
+                    .limit(1);
+
+                if (checkError) {
+                    console.error('Ошибка проверки просмотров:', checkError);
+                    return false;
+                }
+
+                // Если просмотра с этого IP еще не было, сохраняем
+                if (existingViews.length === 0) {
+                    const { data, error } = await supabase
+                        .from('page_views')
+                        .insert([
+                            { 
+                                ip_address: userIP,
+                                user_agent: userAgent,
+                                viewed_at: new Date().toISOString()
+                            }
+                        ]);
+
+                    if (error) {
+                        console.error('Ошибка сохранения просмотра:', error);
+                        return false;
+                    }
+
+                    console.log('Новый просмотр сохранен для IP:', userIP);
+                    return true;
+                } else {
+                    console.log('Просмотр с IP', userIP, 'уже существует');
+                    return false;
+                }
+            } catch (error) {
+                console.error('Ошибка при сохранении просмотра:', error);
+                return false;
+            }
+        }
+
+        // Получение общего количества просмотров
+        async function getTotalViews() {
+            try {
+                const { data, error, count } = await supabase
+                    .from('page_views')
+                    .select('*', { count: 'exact' });
+
+                if (error) {
+                    console.error('Ошибка получения просмотров:', error);
+                    return 0;
+                }
+
+                return count || 0;
+            } catch (error) {
+                console.error('Ошибка подключения к Supabase:', error);
+                return 0;
+            }
+        }
+
+        // Обновление счетчика просмотров
+        async function updateViewCounter() {
+            try {
+                // Сначала сохраняем текущий просмотр (если нужно)
+                await saveViewToSupabase();
+                
+                // Затем получаем общее количество просмотров
+                const totalViews = await getTotalViews();
+                viewCountEl.textContent = totalViews.toLocaleString();
+                
+                console.log('Текущее количество просмотров:', totalViews);
+            } catch (error) {
+                console.error('Ошибка обновления счетчика:', error);
+                viewCountEl.textContent = '0';
+            }
         }
 
         // Аутентификация
@@ -1629,9 +1712,16 @@
 
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', async function() {
+            // Сначала скрываем кнопку Admin
+            loginBtn.style.display = 'none';
+            
+            // Затем проверяем права и загружаем настройки
             await checkAdminAccess();
             await loadSettingsFromSupabase();
+            
+            // Инициализируем плеер и счетчик просмотров
             initPlayer();
+            await updateViewCounter();
         });
     </script>
 </body>
