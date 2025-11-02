@@ -13,6 +13,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: var(--custom-cursor, auto);
         }
 
         body {
@@ -25,6 +26,7 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
+            --accent-color: #00b4d8;
         }
 
         /* Видео фон */
@@ -74,7 +76,7 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #00b4d8;
+            border: 3px solid var(--accent-color);
             margin: 0 auto 15px;
             box-shadow: 0 0 25px rgba(0, 180, 216, 0.6);
             transition: all 0.3s ease;
@@ -99,6 +101,34 @@
             margin-bottom: 20px;
             font-style: italic;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--accent-color);
+            transform: scale(1.2);
+            color: #000;
         }
 
         .view-counter {
@@ -179,7 +209,7 @@
         }
 
         .control-btn:hover {
-            color: #00b4d8;
+            color: var(--accent-color);
             transform: scale(1.1);
             background: rgba(0, 180, 216, 0.1);
         }
@@ -211,7 +241,7 @@
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, #00b4d8, #0096c7);
+            background: linear-gradient(90deg, var(--accent-color), #0096c7);
             border-radius: 3px;
             width: 0%;
             transition: width 0.1s linear;
@@ -242,7 +272,7 @@
         }
 
         .volume-icon:hover {
-            color: #00b4d8;
+            color: var(--accent-color);
             transform: scale(1.2);
         }
 
@@ -260,7 +290,7 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: #00b4d8;
+            background: var(--accent-color);
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 0 8px rgba(0, 180, 216, 0.6);
@@ -286,7 +316,7 @@
         }
 
         .telegram-link:hover {
-            color: #00b4d8;
+            color: var(--accent-color);
             transform: scale(1.2);
             background: rgba(0, 180, 216, 0.2);
             box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
@@ -342,7 +372,7 @@
         .modal h2 {
             margin-bottom: 20px;
             text-align: center;
-            color: #00b4d8;
+            color: var(--accent-color);
         }
 
         .input-group {
@@ -368,7 +398,7 @@
 
         .input-group input:focus {
             outline: none;
-            border-color: #00b4d8;
+            border-color: var(--accent-color);
         }
 
         .modal-buttons {
@@ -388,7 +418,7 @@
         }
 
         .modal-btn.primary {
-            background: #00b4d8;
+            background: var(--accent-color);
             color: #000;
         }
 
@@ -423,117 +453,131 @@
         }
 
         .menu-content {
-            padding: 30px;
-            max-width: 800px;
+            padding: 20px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .menu-section {
             background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .menu-section h3 {
-            color: #00b4d8;
-            margin-bottom: 15px;
-            font-size: 18px;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            font-size: 16px;
         }
 
         .customization-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .option-item {
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             border: 2px solid transparent;
+            font-size: 12px;
         }
 
         .option-item:hover {
-            border-color: #00b4d8;
+            border-color: var(--accent-color);
             transform: scale(1.05);
         }
 
         .option-item.active {
-            border-color: #00b4d8;
+            border-color: var(--accent-color);
             background: rgba(0, 180, 216, 0.2);
         }
 
         .option-item img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-bottom: 8px;
-        }
-
-        .option-item .song-cover {
             width: 60px;
             height: 60px;
             border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 6px;
+        }
+
+        .option-item .song-cover {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin: 0 auto 5px;
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .input-with-btn {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .input-with-btn input {
             flex: 1;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(0, 0, 0, 0.5);
             color: #fff;
+            font-size: 12px;
         }
 
         .input-with-btn button {
-            padding: 10px 15px;
-            background: #00b4d8;
+            padding: 8px 12px;
+            background: var(--accent-color);
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             color: #000;
             cursor: pointer;
             font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
         }
 
         .song-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px;
+            padding: 8px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            margin-bottom: 8px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
         }
 
         .song-item-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .song-item-actions {
             display: flex;
-            gap: 5px;
+            gap: 4px;
         }
 
         .action-btn {
-            padding: 5px 10px;
+            padding: 4px 8px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10px;
         }
 
         .action-btn.delete {
@@ -542,8 +586,31 @@
         }
 
         .action-btn.play {
-            background: #00b4d8;
+            background: var(--accent-color);
             color: black;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        .link-item-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .link-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
         }
 
         .close-menu {
@@ -553,21 +620,37 @@
             background: none;
             border: none;
             color: #fff;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .close-menu:hover {
-            color: #00b4d8;
+            color: var(--accent-color);
             transform: scale(1.2);
+        }
+
+        .small-btn {
+            padding: 6px 10px;
+            font-size: 11px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: var(--accent-color);
+            color: #000;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .small-btn:hover {
+            transform: scale(1.05);
         }
 
         /* Анимация пульсации для аватара */
         @keyframes pulse {
-            0% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
-            50% { box-shadow: 0 0 30px rgba(0, 180, 216, 0.8); }
-            100% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
+            0% { box-shadow: 0 0 20px var(--accent-color); }
+            50% { box-shadow: 0 0 30px var(--accent-color); }
+            100% { box-shadow: 0 0 20px var(--accent-color); }
         }
 
         .avatar {
@@ -581,9 +664,17 @@
 
         .error-message {
             color: #ff4757;
-            font-size: 12px;
-            margin-top: 5px;
+            font-size: 11px;
+            margin-top: 4px;
             text-align: center;
+        }
+
+        /* Эффекты курсора */
+        .cursor-effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s ease;
         }
     </style>
 </head>
@@ -604,6 +695,9 @@
             <img src="https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg" alt="Аватар" class="avatar" id="profile-avatar">
             <h1 class="name" id="profile-name">mike nekrulov</h1>
             <p class="bio-text" id="profile-bio">hey</p>
+            <div class="links-container" id="links-container">
+                <!-- Ссылки будут добавлены динамически -->
+            </div>
             <div class="view-counter">
                 <i class="fas fa-eye"></i>
                 <span id="view-count">0</span>
@@ -684,34 +778,93 @@
             </button>
         </div>
         <div class="menu-content">
+            <!-- Background Section -->
             <div class="menu-section">
-                <h3>Фон страницы</h3>
+                <h3>background</h3>
                 <div class="customization-options" id="background-options">
                     <!-- Опции фона будут добавлены динамически -->
                 </div>
                 <div class="input-with-btn">
-                    <input type="text" id="custom-background-url" placeholder="URL нового фона (видео или изображение)">
-                    <button id="add-background">Добавить фон</button>
+                    <input type="text" id="custom-background-url" placeholder="URL нового фона">
+                    <button id="add-background">добавить фон</button>
                 </div>
             </div>
 
+            <!-- Avatar Section -->
             <div class="menu-section">
-                <h3>Аватар профиля</h3>
+                <h3>avatar</h3>
                 <div class="customization-options" id="avatar-options">
                     <!-- Опции аватаров будут добавлены динамически -->
                 </div>
                 <div class="input-with-btn">
                     <input type="text" id="custom-avatar-url" placeholder="URL нового аватара">
-                    <button id="add-avatar">Добавить аватар</button>
+                    <button id="add-avatar">добавить аватарку</button>
                 </div>
             </div>
 
+            <!-- Color Section -->
             <div class="menu-section">
-                <h3>Плейлист</h3>
+                <h3>цвет сайта</h3>
+                <div class="customization-options" id="color-options">
+                    <div class="option-item" onclick="selectColor('#00b4d8')">
+                        <div class="color-option" style="background: #00b4d8"></div>
+                        <div>Голубой</div>
+                    </div>
+                    <div class="option-item" onclick="selectColor('#ff6b6b')">
+                        <div class="color-option" style="background: #ff6b6b"></div>
+                        <div>Красный</div>
+                    </div>
+                    <div class="option-item" onclick="selectColor('#51cf66')">
+                        <div class="color-option" style="background: #51cf66"></div>
+                        <div>Зеленый</div>
+                    </div>
+                    <div class="option-item" onclick="selectColor('#ffd43b')">
+                        <div class="color-option" style="background: #ffd43b"></div>
+                        <div>Желтый</div>
+                    </div>
+                    <div class="option-item" onclick="selectColor('#cc5de8')">
+                        <div class="color-option" style="background: #cc5de8"></div>
+                        <div>Фиолетовый</div>
+                    </div>
+                </div>
+                <div class="input-with-btn">
+                    <input type="color" id="custom-color" value="#00b4d8">
+                    <button onclick="selectCustomColor()">применить цвет</button>
+                </div>
+            </div>
+
+            <!-- Cursor Section -->
+            <div class="menu-section">
+                <h3>курсор</h3>
+                <div class="customization-options" id="cursor-options">
+                    <div class="option-item" onclick="selectCursor('default')">
+                        <div style="width: 40px; height: 40px; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <div>Стандартный</div>
+                    </div>
+                    <div class="option-item" onclick="selectCursor('https://cdn.custom-cursor.com/db/4646/32/arrow2692.png')">
+                        <img src="https://cdn.custom-cursor.com/db/4646/32/arrow2692.png" style="width: 40px; height: 40px; object-fit: contain;">
+                        <div>Стрелка</div>
+                    </div>
+                    <div class="option-item" onclick="selectCursor('https://cdn.custom-cursor.com/db/4645/32/arrow2691.png')">
+                        <img src="https://cdn.custom-cursor.com/db/4645/32/arrow2691.png" style="width: 40px; height: 40px; object-fit: contain;">
+                        <div>Игровой</div>
+                    </div>
+                </div>
+                <div class="input-with-btn">
+                    <input type="text" id="custom-cursor-url" placeholder="URL курсора (png, webp, cur)">
+                    <button onclick="addCustomCursor()">добавить курсор</button>
+                </div>
+            </div>
+
+            <!-- Playlist Section -->
+            <div class="menu-section">
+                <h3>playlist</h3>
                 <div id="playlist-management">
                     <!-- Список песен будет добавлен динамически -->
                 </div>
-                <div style="margin-top: 15px;">
+                <div style="margin-top: 12px;">
                     <h4>Добавить новую песню</h4>
                     <div class="input-group">
                         <input type="text" id="new-song-title" placeholder="Название песни">
@@ -725,24 +878,47 @@
                     <div class="input-group">
                         <input type="text" id="new-song-url" placeholder="URL аудио файла">
                     </div>
-                    <button class="modal-btn primary" id="add-song" style="width: 100%;">Добавить песню</button>
+                    <button class="small-btn" id="add-song" style="width: 100%;">добавить песню</button>
                 </div>
             </div>
 
+            <!-- Links Section -->
             <div class="menu-section">
-                <h3>Текст био</h3>
+                <h3>ссылки</h3>
+                <div id="links-management">
+                    <!-- Список ссылок будет добавлен динамически -->
+                </div>
+                <div style="margin-top: 12px;">
+                    <h4>Добавить новую ссылку</h4>
+                    <div class="input-group">
+                        <input type="text" id="new-link-name" placeholder="Название (YouTube, Steam...)">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="new-link-url" placeholder="URL ссылки">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="new-link-icon" placeholder="URL иконки (опционально)">
+                    </div>
+                    <button class="small-btn" id="add-link" style="width: 100%;">добавить ссылку</button>
+                </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="menu-section">
+                <h3>description</h3>
                 <div class="input-group">
-                    <input type="text" id="custom-bio" placeholder="Новый текст био">
+                    <input type="text" id="custom-bio" placeholder="Новый текст описания">
                 </div>
-                <button class="modal-btn primary" id="save-bio" style="width: 100%;">Сохранить био</button>
+                <button class="small-btn" id="save-bio" style="width: 100%;">изменить описание</button>
             </div>
 
+            <!-- Nickname Section -->
             <div class="menu-section">
-                <h3>Имя профиля</h3>
+                <h3>nickname</h3>
                 <div class="input-group">
                     <input type="text" id="custom-name" placeholder="Новое имя">
                 </div>
-                <button class="modal-btn primary" id="save-name" style="width: 100%;">Сохранить имя</button>
+                <button class="small-btn" id="save-name" style="width: 100%;">изменить ник</button>
             </div>
         </div>
     </div>
@@ -753,9 +929,9 @@
     </audio>
 
     <script>
-        // Конфигурация Supabase - ЗАМЕНИТЕ НА СВОИ ДАННЫЕ
-        const SUPABASE_URL = 'https://your-project.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
+        // Конфигурация Supabase
+        const SUPABASE_URL = 'https://yuxkougslrauvnrvlrip.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1eGtvdWdzbHJhdXZucnZscmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwMjIxNTgsImV4cCI6MjA3NzU5ODE1OH0.cCo4gfxlTsJMvPn2Sx4ehC0VyUZavs8yV837ur6fias';
         
         // Инициализация Supabase клиента
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -791,12 +967,14 @@
         const profileName = document.getElementById('profile-name');
         const profileBio = document.getElementById('profile-bio');
         const backgroundVideo = document.getElementById('background-video');
+        const linksContainer = document.getElementById('links-container');
 
         // Состояние приложения
         let isPlaying = false;
         let currentSongIndex = 0;
         let isAdmin = false;
         let userIP = '';
+        let cursorEffects = [];
 
         // Настройки по умолчанию
         let settings = {
@@ -808,13 +986,29 @@
             ],
             avatars: [
                 { name: 'Текущий', url: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg' },
-                { name: 'Аватар 2', url: 'https://i.pinimg.com/736x/ab/5d/10/ab5d10d5c2b15f9f54cffa9f5f15c5d5.jpg' },
-                { name: 'Аватар 3', url: 'https://i.pinimg.com/736x/7d/8c/40/7d8c40adc1088d5d7e3f5c8a5e5a5a5a.jpg' }
+                { name: 'Аватар 2', url: 'https://i.pinimg.com/736x/ab/5d/10/ab5d10d5c2b15f9f54cffa9f5f15c5d5.jpg' }
+            ],
+            cursors: [
+                { name: 'Стандартный', url: 'default' },
+                { name: 'Стрелка', url: 'https://cdn.custom-cursor.com/db/4646/32/arrow2692.png' },
+                { name: 'Игровой', url: 'https://cdn.custom-cursor.com/db/4645/32/arrow2691.png' }
+            ],
+            colors: [
+                { name: 'Голубой', value: '#00b4d8' },
+                { name: 'Красный', value: '#ff6b6b' },
+                { name: 'Зеленый', value: '#51cf66' },
+                { name: 'Желтый', value: '#ffd43b' },
+                { name: 'Фиолетовый', value: '#cc5de8' }
             ],
             currentBackground: 'background.mp4',
             currentAvatar: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg',
+            currentCursor: 'default',
+            currentColor: '#00b4d8',
             profileName: 'mike nekrulov',
-            profileBio: 'hey'
+            profileBio: 'hey',
+            links: [
+                { name: 'Telegram', url: 'https://t.me/mosc8n', icon: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg' }
+            ]
         };
 
         // Плейлист
@@ -861,31 +1055,79 @@
             return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
         }
 
-        // Показать/скрыть модальное окно
-        function showModal(modal) {
-            modal.style.display = 'block';
-        }
+        // Сохранение настроек в Supabase
+        async function saveSettingsToSupabase() {
+            try {
+                const settingsToSave = {
+                    backgrounds: settings.backgrounds,
+                    avatars: settings.avatars,
+                    cursors: settings.cursors,
+                    colors: settings.colors,
+                    currentBackground: settings.currentBackground,
+                    currentAvatar: settings.currentAvatar,
+                    currentCursor: settings.currentCursor,
+                    currentColor: settings.currentColor,
+                    profileName: settings.profileName,
+                    profileBio: settings.profileBio,
+                    links: settings.links,
+                    playlist: playlist,
+                    updated_at: new Date().toISOString()
+                };
 
-        function hideModal(modal) {
-            modal.style.display = 'none';
-        }
+                const { data, error } = await supabase
+                    .from('profile_settings')
+                    .upsert({
+                        id: 1,
+                        settings: settingsToSave
+                    });
 
-        // Загрузка настроек из localStorage
-        function loadSettings() {
-            const saved = localStorage.getItem('profileSettings');
-            if (saved) {
-                settings = { ...settings, ...JSON.parse(saved) };
+                if (error) {
+                    console.error('Ошибка сохранения в Supabase:', error);
+                    return false;
+                }
+
+                console.log('Настройки сохранены в Supabase');
+                return true;
+            } catch (error) {
+                console.error('Ошибка подключения к Supabase:', error);
+                return false;
             }
-            applySettings();
         }
 
-        // Сохранение настроек в localStorage
-        function saveSettings() {
-            localStorage.setItem('profileSettings', JSON.stringify(settings));
+        // Загрузка настроек из Supabase
+        async function loadSettingsFromSupabase() {
+            try {
+                const { data, error } = await supabase
+                    .from('profile_settings')
+                    .select('settings')
+                    .eq('id', 1)
+                    .single();
+
+                if (error || !data) {
+                    console.log('Настройки не найдены, используются значения по умолчанию');
+                    return false;
+                }
+
+                // Обновляем настройки из базы данных
+                const savedSettings = data.settings;
+                settings = { ...settings, ...savedSettings };
+                if (savedSettings.playlist) {
+                    playlist = savedSettings.playlist;
+                }
+
+                applySettings();
+                return true;
+            } catch (error) {
+                console.error('Ошибка загрузки из Supabase:', error);
+                return false;
+            }
         }
 
         // Применение настроек
         function applySettings() {
+            // Применяем цвет
+            document.documentElement.style.setProperty('--accent-color', settings.currentColor);
+
             // Применяем фон
             if (settings.currentBackground) {
                 if (settings.currentBackground.includes('.mp4') || settings.currentBackground.includes('.webm')) {
@@ -903,6 +1145,13 @@
                 profileAvatar.src = settings.currentAvatar;
             }
 
+            // Применяем курсор
+            if (settings.currentCursor && settings.currentCursor !== 'default') {
+                document.documentElement.style.setProperty('--custom-cursor', `url('${settings.currentCursor}'), auto`);
+            } else {
+                document.documentElement.style.setProperty('--custom-cursor', 'auto');
+            }
+
             // Применяем имя и био
             if (settings.profileName) {
                 profileName.textContent = settings.profileName;
@@ -910,25 +1159,52 @@
             if (settings.profileBio) {
                 profileBio.textContent = settings.profileBio;
             }
+
+            // Применяем ссылки
+            updateLinksDisplay();
+        }
+
+        // Обновление отображения ссылок
+        function updateLinksDisplay() {
+            linksContainer.innerHTML = '';
+            settings.links.forEach(link => {
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url;
+                linkElement.target = '_blank';
+                linkElement.className = 'social-link';
+                linkElement.innerHTML = link.icon ? 
+                    `<img src="${link.icon}" alt="${link.name}" style="width: 20px; height: 20px;">` :
+                    `<i class="fas fa-link"></i>`;
+                linksContainer.appendChild(linkElement);
+            });
         }
 
         // Инициализация меню кастомизации
         function initCustomizationMenu() {
-            // Заполняем опции фона
+            initBackgroundOptions();
+            initAvatarOptions();
+            initCursorOptions();
+            initColorOptions();
+            updatePlaylistManagement();
+            updateLinksManagement();
+        }
+
+        function initBackgroundOptions() {
             const backgroundOptions = document.getElementById('background-options');
             backgroundOptions.innerHTML = '';
             settings.backgrounds.forEach((bg, index) => {
                 const bgElement = document.createElement('div');
                 bgElement.className = `option-item ${bg.value === settings.currentBackground ? 'active' : ''}`;
                 bgElement.innerHTML = `
-                    <div style="width: 80px; height: 80px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 10px; margin-bottom: 8px;"></div>
+                    <div style="width: 60px; height: 60px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 8px; margin-bottom: 6px;"></div>
                     <div>${bg.name}</div>
                 `;
                 bgElement.onclick = () => selectBackground(bg.value);
                 backgroundOptions.appendChild(bgElement);
             });
+        }
 
-            // Заполняем опции аватаров
+        function initAvatarOptions() {
             const avatarOptions = document.getElementById('avatar-options');
             avatarOptions.innerHTML = '';
             settings.avatars.forEach((avatar, index) => {
@@ -941,16 +1217,42 @@
                 avatarElement.onclick = () => selectAvatar(avatar.url);
                 avatarOptions.appendChild(avatarElement);
             });
+        }
 
-            // Заполняем управление плейлистом
-            updatePlaylistManagement();
+        function initCursorOptions() {
+            const cursorOptions = document.getElementById('cursor-options');
+            cursorOptions.innerHTML = '';
+            settings.cursors.forEach((cursor, index) => {
+                const cursorElement = document.createElement('div');
+                cursorElement.className = `option-item ${cursor.url === settings.currentCursor ? 'active' : ''}`;
+                if (cursor.url === 'default') {
+                    cursorElement.innerHTML = `
+                        <div style="width: 40px; height: 40px; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <div>${cursor.name}</div>
+                    `;
+                } else {
+                    cursorElement.innerHTML = `
+                        <img src="${cursor.url}" style="width: 40px; height: 40px; object-fit: contain;">
+                        <div>${cursor.name}</div>
+                    `;
+                }
+                cursorElement.onclick = () => selectCursor(cursor.url);
+                cursorOptions.appendChild(cursorElement);
+            });
+        }
+
+        function initColorOptions() {
+            const colorOptions = document.getElementById('color-options');
+            // Colors are hardcoded in HTML
         }
 
         // Выбор фона
         function selectBackground(background) {
             settings.currentBackground = background;
             applySettings();
-            saveSettings();
+            saveSettingsToSupabase();
             initCustomizationMenu();
         }
 
@@ -958,8 +1260,43 @@
         function selectAvatar(avatarUrl) {
             settings.currentAvatar = avatarUrl;
             applySettings();
-            saveSettings();
+            saveSettingsToSupabase();
             initCustomizationMenu();
+        }
+
+        // Выбор курсора
+        function selectCursor(cursorUrl) {
+            settings.currentCursor = cursorUrl;
+            applySettings();
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Выбор цвета
+        function selectColor(color) {
+            settings.currentColor = color;
+            applySettings();
+            saveSettingsToSupabase();
+        }
+
+        function selectCustomColor() {
+            const color = document.getElementById('custom-color').value;
+            selectColor(color);
+        }
+
+        // Добавление пользовательского курсора
+        function addCustomCursor() {
+            const url = document.getElementById('custom-cursor-url').value;
+            if (url) {
+                settings.cursors.push({
+                    name: 'Пользовательский',
+                    url: url
+                });
+                document.getElementById('custom-cursor-url').value = '';
+                saveSettingsToSupabase();
+                initCustomizationMenu();
+                alert('Курсор добавлен!');
+            }
         }
 
         // Обновление управления плейлистом
@@ -972,7 +1309,7 @@
                 songElement.className = 'song-item';
                 songElement.innerHTML = `
                     <div class="song-item-info">
-                        <img src="${song.cover}" alt="Cover" class="song-cover">
+                        <img src="${song.cover}" alt="Cover" style="width: 30px; height: 30px; border-radius: 4px;">
                         <div>
                             <div><strong>${song.title}</strong></div>
                             <div>${song.artist}</div>
@@ -984,6 +1321,30 @@
                     </div>
                 `;
                 playlistManagement.appendChild(songElement);
+            });
+        }
+
+        // Обновление управления ссылками
+        function updateLinksManagement() {
+            const linksManagement = document.getElementById('links-management');
+            linksManagement.innerHTML = '';
+
+            settings.links.forEach((link, index) => {
+                const linkElement = document.createElement('div');
+                linkElement.className = 'link-item';
+                linkElement.innerHTML = `
+                    <div class="link-item-info">
+                        ${link.icon ? `<img src="${link.icon}" alt="${link.name}" class="link-icon">` : '<i class="fas fa-link"></i>'}
+                        <div>
+                            <div><strong>${link.name}</strong></div>
+                            <div style="font-size: 10px; color: #aaa;">${link.url}</div>
+                        </div>
+                    </div>
+                    <div class="song-item-actions">
+                        <button class="action-btn delete" onclick="removeLink(${index})">✕</button>
+                    </div>
+                `;
+                linksManagement.appendChild(linkElement);
             });
         }
 
@@ -1004,7 +1365,7 @@
                     currentSongIndex--;
                 }
                 updatePlaylistManagement();
-                savePlaylist();
+                saveSettingsToSupabase();
                 if (index === currentSongIndex) {
                     loadSong(currentSongIndex);
                 }
@@ -1013,17 +1374,12 @@
             }
         }
 
-        // Сохранение плейлиста
-        function savePlaylist() {
-            localStorage.setItem('userPlaylist', JSON.stringify(playlist));
-        }
-
-        // Загрузка плейлиста
-        function loadPlaylist() {
-            const saved = localStorage.getItem('userPlaylist');
-            if (saved) {
-                playlist = JSON.parse(saved);
-            }
+        // Удаление ссылки
+        function removeLink(index) {
+            settings.links.splice(index, 1);
+            updateLinksManagement();
+            updateLinksDisplay();
+            saveSettingsToSupabase();
         }
 
         // Добавление новой песни
@@ -1041,7 +1397,7 @@
                     src: url
                 });
                 updatePlaylistManagement();
-                savePlaylist();
+                saveSettingsToSupabase();
                 
                 // Очищаем поля
                 document.getElementById('new-song-title').value = '';
@@ -1055,6 +1411,33 @@
             }
         }
 
+        // Добавление новой ссылки
+        function addNewLink() {
+            const name = document.getElementById('new-link-name').value;
+            const url = document.getElementById('new-link-url').value;
+            const icon = document.getElementById('new-link-icon').value;
+
+            if (name && url) {
+                settings.links.push({
+                    name: name,
+                    url: url,
+                    icon: icon || ''
+                });
+                updateLinksManagement();
+                updateLinksDisplay();
+                saveSettingsToSupabase();
+                
+                // Очищаем поля
+                document.getElementById('new-link-name').value = '';
+                document.getElementById('new-link-url').value = '';
+                document.getElementById('new-link-icon').value = '';
+                
+                alert('Ссылка добавлена!');
+            } else {
+                alert('Заполните название и URL!');
+            }
+        }
+
         // Добавление пользовательского фона
         function addCustomBackground() {
             const url = document.getElementById('custom-background-url').value;
@@ -1065,8 +1448,8 @@
                     value: url
                 });
                 document.getElementById('custom-background-url').value = '';
+                saveSettingsToSupabase();
                 initCustomizationMenu();
-                saveSettings();
                 alert('Фон добавлен!');
             }
         }
@@ -1080,8 +1463,8 @@
                     url: url
                 });
                 document.getElementById('custom-avatar-url').value = '';
+                saveSettingsToSupabase();
                 initCustomizationMenu();
-                saveSettings();
                 alert('Аватар добавлен!');
             }
         }
@@ -1092,9 +1475,9 @@
             if (bio) {
                 settings.profileBio = bio;
                 applySettings();
-                saveSettings();
+                saveSettingsToSupabase();
                 document.getElementById('custom-bio').value = '';
-                alert('Био обновлено!');
+                alert('Описание обновлено!');
             }
         }
 
@@ -1104,13 +1487,42 @@
             if (name) {
                 settings.profileName = name;
                 applySettings();
-                saveSettings();
+                saveSettingsToSupabase();
                 document.getElementById('custom-name').value = '';
-                alert('Имя обновлено!');
+                alert('Ник обновлен!');
             }
         }
 
-        // Функции музыкального плеера (остаются без изменений)
+        // Эффекты курсора
+        function createCursorEffect(x, y) {
+            if (settings.currentColor && Math.random() > 0.7) {
+                const effect = document.createElement('div');
+                effect.className = 'cursor-effect';
+                effect.style.left = x + 'px';
+                effect.style.top = y + 'px';
+                effect.style.width = '4px';
+                effect.style.height = '4px';
+                effect.style.background = settings.currentColor;
+                effect.style.borderRadius = '50%';
+                effect.style.boxShadow = `0 0 10px ${settings.currentColor}`;
+                
+                document.body.appendChild(effect);
+                
+                cursorEffects.push(effect);
+                
+                setTimeout(() => {
+                    effect.style.transform = 'scale(2)';
+                    effect.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    document.body.removeChild(effect);
+                    cursorEffects = cursorEffects.filter(e => e !== effect);
+                }, 1000);
+            }
+        }
+
+        // Функции музыкального плеера
         function initPlayer() {
             loadSong(currentSongIndex);
             updateProgressBar();
@@ -1241,18 +1653,36 @@
         document.getElementById('add-background').addEventListener('click', addCustomBackground);
         document.getElementById('add-avatar').addEventListener('click', addCustomAvatar);
         document.getElementById('add-song').addEventListener('click', addNewSong);
+        document.getElementById('add-link').addEventListener('click', addNewLink);
         document.getElementById('save-bio').addEventListener('click', saveBio);
         document.getElementById('save-name').addEventListener('click', saveName);
+
+        // Обработчик движения мыши для эффектов
+        document.addEventListener('mousemove', (e) => {
+            createCursorEffect(e.clientX, e.clientY);
+        });
+
+        // Вспомогательные функции
+        function showModal(modal) {
+            modal.style.display = 'block';
+        }
+
+        function hideModal(modal) {
+            modal.style.display = 'none';
+        }
 
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', async function() {
             await checkAdminAccess();
-            loadSettings();
+            await loadSettingsFromSupabase();
             loadPlaylist();
             initPlayer();
-            // initializeCachedViews();
-            // updateViewCounter();
         });
+
+        // Загрузка плейлиста
+        function loadPlaylist() {
+            // Playlist is now loaded from Supabase
+        }
     </script>
 </body>
 </html>
