@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mike nekrulov | bio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Подключаем Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * {
             margin: 0;
@@ -62,6 +64,7 @@
 
         .profile-section {
             margin-bottom: 25px;
+            position: relative;
         }
 
         .avatar {
@@ -88,6 +91,20 @@
             margin-bottom: 20px;
             font-style: italic;
             text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .view-counter {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(0, 180, 216, 0.3);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid rgba(0, 180, 216, 0.5);
         }
 
         .music-player {
@@ -271,6 +288,11 @@
         .avatar {
             animation: pulse 3s infinite ease-in-out;
         }
+
+        /* Стиль для загрузки */
+        .loading {
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -286,6 +308,10 @@
             <img src="https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg" alt="Аватар" class="avatar">
             <h1 class="name">mike nekrulov</h1>
             <p class="bio-text">hey</p>
+            <div class="view-counter">
+                <i class="fas fa-eye"></i>
+                <span id="view-count">0</span>
+            </div>
         </div>
         
         <div class="music-player">
@@ -339,6 +365,13 @@
     </audio>
 
     <script>
+        // Конфигурация Supabase - ЗАМЕНИТЕ НА СВОИ ДАННЫЕ
+        const SUPABASE_URL = 'https://yuxkougslrauvnrvlrip.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1eGtvdWdzbHJhdXZucnZscmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwMjIxNTgsImV4cCI6MjA3NzU5ODE1OH0.cCo4gfxlTsJMvPn2Sx4ehC0VyUZavs8yV837ur6fias';
+        
+        // Инициализация Supabase клиента
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Элементы управления музыкой
         const audioPlayer = document.getElementById('audio-player');
         const playPauseBtn = document.querySelector('.play-pause');
@@ -353,6 +386,7 @@
         const songTitle = document.querySelector('.song-title');
         const songArtist = document.querySelector('.song-artist');
         const albumCover = document.querySelector('.album-cover');
+        const viewCountEl = document.getElementById('view-count');
 
         // Состояние плеера
         let isPlaying = false;
@@ -363,18 +397,158 @@
             {
                 title: "типичная ситуация",
                 artist: "madk1d",
-                cover: "music1icon.jpg", // Локальный файл в той же папке
-                src: "music1.mp3" // Локальный файл в той же папке
+                cover: "music1icon.jpg",
+                src: "music1.mp3"
             },
             {
                 title: "infinite void",
                 artist: "kur0iwa", 
-                cover: "music2icon.jpg", // Локальный файл в той же папке
-                src: "music2.mp3" // Локальный файл в той же папке
+                cover: "music2icon.jpg",
+                src: "music2.mp3"
             }
         ];
 
-        // Инициализация
+        // Функция для получения IP пользователя
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Ошибка получения IP:', error);
+                return 'unknown-' + Math.random().toString(36).substring(2, 15);
+            }
+        }
+
+        // Функция для создания таблицы в Supabase (запустить один раз)
+        async function createViewsTable() {
+            try {
+                // Эта функция должна быть выполнена через Supabase SQL или в Dashboard
+                console.log('Таблица должна быть создана вручную в Supabase Dashboard');
+            } catch (error) {
+                console.error('Ошибка создания таблицы:', error);
+            }
+        }
+
+        // Функция для сохранения просмотра в Supabase
+        async function saveViewToSupabase(ipAddress, userAgent) {
+            try {
+                const { data, error } = await supabase
+                    .from('page_views')
+                    .insert([
+                        { 
+                            ip_address: ipAddress,
+                            user_agent: userAgent,
+                            viewed_at: new Date().toISOString()
+                        }
+                    ])
+                    .select();
+
+                if (error) {
+                    console.error('Ошибка сохранения в Supabase:', error);
+                    return false;
+                }
+
+                console.log('Просмотр сохранен в Supabase:', data);
+                return true;
+            } catch (error) {
+                console.error('Ошибка подключения к Supabase:', error);
+                return false;
+            }
+        }
+
+        // Функция для получения общего количества уникальных просмотров
+        async function getTotalViews() {
+            try {
+                const { data, error, count } = await supabase
+                    .from('page_views')
+                    .select('ip_address', { count: 'exact', head: true })
+                    .not('ip_address', 'like', 'unknown-%');
+
+                if (error) {
+                    console.error('Ошибка получения данных:', error);
+                    return 0;
+                }
+
+                return count || 0;
+            } catch (error) {
+                console.error('Ошибка подключения:', error);
+                return 0;
+            }
+        }
+
+        // Функция для проверки существующего просмотра с этого IP
+        async function checkExistingView(ipAddress) {
+            try {
+                const { data, error } = await supabase
+                    .from('page_views')
+                    .select('id')
+                    .eq('ip_address', ipAddress)
+                    .limit(1);
+
+                if (error) {
+                    console.error('Ошибка проверки IP:', error);
+                    return false;
+                }
+
+                return data.length > 0;
+            } catch (error) {
+                console.error('Ошибка подключения:', error);
+                return false;
+            }
+        }
+
+        // Основная функция для работы со счетчиком просмотров
+        async function updateViewCounter() {
+            try {
+                // Показываем загрузку
+                viewCountEl.textContent = '...';
+                viewCountEl.classList.add('loading');
+
+                // Получаем IP пользователя
+                const userIP = await getUserIP();
+                const userAgent = navigator.userAgent;
+
+                console.log('IP пользователя:', userIP);
+
+                // Проверяем, был ли уже просмотр с этого IP
+                const hasViewed = await checkExistingView(userIP);
+                
+                if (!hasViewed) {
+                    // Сохраняем новый просмотр
+                    const saved = await saveViewToSupabase(userIP, userAgent);
+                    if (saved) {
+                        console.log('Новый просмотр сохранен');
+                    }
+                } else {
+                    console.log('Повторный просмотр с этого IP');
+                }
+
+                // Получаем общее количество просмотров
+                const totalViews = await getTotalViews();
+                viewCountEl.textContent = totalViews.toLocaleString();
+                viewCountEl.classList.remove('loading');
+
+                // Сохраняем в localStorage для кэширования
+                localStorage.setItem('cachedViews', totalViews.toString());
+                localStorage.setItem('lastViewUpdate', Date.now().toString());
+
+            } catch (error) {
+                console.error('Ошибка обновления счетчика:', error);
+                // Fallback: используем кэшированные данные
+                const cachedViews = localStorage.getItem('cachedViews') || '0';
+                viewCountEl.textContent = parseInt(cachedViews).toLocaleString();
+                viewCountEl.classList.remove('loading');
+            }
+        }
+
+        // Функция для инициализации кэшированных данных
+        function initializeCachedViews() {
+            const cachedViews = localStorage.getItem('cachedViews') || '0';
+            viewCountEl.textContent = parseInt(cachedViews).toLocaleString();
+        }
+
+        // Инициализация плеера
         function initPlayer() {
             loadSong(currentSongIndex);
             updateProgressBar();
@@ -510,8 +684,12 @@
         // Автопереход к следующему треку
         audioPlayer.addEventListener('ended', nextSong);
 
-        // Инициализация плеера
-        initPlayer();
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            initPlayer();
+            initializeCachedViews(); // Показываем кэшированные данные сразу
+            updateViewCounter(); // Затем обновляем из Supabase
+        });
     </script>
 </body>
 </html>
