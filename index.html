@@ -142,18 +142,21 @@
             color: #000;
         }
 
-        .view-counter {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        /* Просмотры в правом верхнем углу страницы */
+        .global-view-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: var(--accent-color-shadow);
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 15px;
             font-size: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
             border: 1px solid var(--accent-color);
+            z-index: 999;
+            backdrop-filter: blur(10px);
         }
 
         .music-player {
@@ -440,24 +443,18 @@
         }
 
         .menu-header {
-            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-color-dark) 100%);
+            background: rgba(50, 50, 50, 0.9);
             padding: 25px 20px;
             text-align: center;
             position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .menu-header h2 {
             font-size: 24px;
             font-weight: 600;
             margin: 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .menu-author {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            margin-top: 5px;
-            font-style: italic;
+            color: #888;
         }
 
         .menu-content {
@@ -701,7 +698,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #666;
             border: none;
             color: #fff;
             font-size: 24px;
@@ -717,9 +714,9 @@
         }
 
         .close-menu:hover {
-            color: var(--accent-color);
+            color: #fff;
             transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.2);
+            background: #777;
         }
 
         .small-btn {
@@ -762,6 +759,16 @@
             text-align: center;
         }
 
+        /* Подпись в меню */
+        .menu-footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Загрузка файлов */
         .file-input-wrapper {
             position: relative;
@@ -795,9 +802,49 @@
             background: var(--accent-color-dark);
             transform: scale(1.05);
         }
+
+        /* Красивое поле для добавления песни */
+        .add-song-form {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .add-song-form h4 {
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
     </style>
 </head>
 <body>
+    <!-- Просмотры в правом верхнем углу страницы -->
+    <div class="global-view-counter">
+        <i class="fas fa-eye"></i>
+        <span id="global-view-count">...</span>
+    </div>
+
     <!-- Видео фон -->
     <video class="video-bg" autoplay muted loop playsinline id="background-video">
         <source src="background.mp4" type="video/mp4">
@@ -816,10 +863,6 @@
             <p class="bio-text" id="profile-bio">hey</p>
             <div class="links-container" id="links-container">
                 <!-- Ссылки будут добавлены динамически -->
-            </div>
-            <div class="view-counter">
-                <i class="fas fa-eye"></i>
-                <span id="view-count">...</span>
             </div>
         </div>
         
@@ -886,8 +929,7 @@
     <!-- Меню кастомизации -->
     <div class="customization-menu" id="customization-menu">
         <div class="menu-header">
-            <h2>Панель управления</h2>
-            <div class="menu-author">by mike nekrulov</div>
+            <h2>Кастомизация</h2>
             <button class="close-menu" id="close-menu">
                 <i class="fas fa-times"></i>
             </button>
@@ -902,6 +944,10 @@
                 <div class="input-with-btn">
                     <input type="text" id="custom-background-url" placeholder="URL нового фона">
                     <button id="add-background">добавить фон</button>
+                </div>
+                <div class="file-input-wrapper" style="margin-top: 10px;">
+                    <input type="file" id="background-file" accept="image/*,video/*">
+                    <label for="background-file" class="file-input-label">Загрузить фон</label>
                 </div>
             </div>
 
@@ -957,18 +1003,18 @@
                 <div id="playlist-management">
                     <!-- Список песен будет добавлен динамически -->
                 </div>
-                <div style="margin-top: 12px;">
+                <div class="add-song-form">
                     <h4>Добавить новую песню</h4>
-                    <div class="input-group">
+                    <div class="form-group">
                         <input type="text" id="new-song-title" placeholder="Название песни">
                     </div>
-                    <div class="input-group">
+                    <div class="form-group">
                         <input type="text" id="new-song-artist" placeholder="Исполнитель">
                     </div>
-                    <div class="input-group">
+                    <div class="form-group">
                         <input type="text" id="new-song-cover" placeholder="URL обложки">
                     </div>
-                    <div class="input-group">
+                    <div class="form-group">
                         <input type="text" id="new-song-url" placeholder="URL аудио файла">
                     </div>
                     <button class="small-btn" id="add-song" style="width: 100%;">добавить песню</button>
@@ -1014,6 +1060,7 @@
                 <button class="small-btn" id="save-name" style="width: 100%;">изменить ник</button>
             </div>
         </div>
+        <div class="menu-footer">by mike nekrulov</div>
     </div>
 
     <!-- Аудио элемент -->
@@ -1048,7 +1095,7 @@
         const songTitle = document.querySelector('.song-title');
         const songArtist = document.querySelector('.song-artist');
         const albumCover = document.querySelector('.album-cover');
-        const viewCountEl = document.getElementById('view-count');
+        const globalViewCountEl = document.getElementById('global-view-count');
         const loginBtn = document.getElementById('login-btn');
         const loginModal = document.getElementById('login-modal');
         const customizationMenu = document.getElementById('customization-menu');
@@ -1215,12 +1262,12 @@
                 
                 // Затем получаем общее количество просмотров
                 const totalViews = await getTotalViews();
-                viewCountEl.textContent = totalViews.toLocaleString();
+                globalViewCountEl.textContent = totalViews.toLocaleString();
                 
                 console.log('Текущее количество просмотров:', totalViews);
             } catch (error) {
                 console.error('Ошибка обновления счетчика:', error);
-                viewCountEl.textContent = '0';
+                globalViewCountEl.textContent = '0';
             }
         }
 
@@ -1608,6 +1655,28 @@
                     }).catch(function(error) {
                         alert('Ошибка загрузки шрифта: ' + error);
                     });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('background-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const isVideo = file.type.includes('video');
+                    const newBackground = {
+                        name: 'Загруженный фон',
+                        type: isVideo ? 'video' : 'color',
+                        value: e.target.result
+                    };
+                    settings.backgrounds.push(newBackground);
+                    settings.currentBackground = e.target.result;
+                    applySettings();
+                    saveSettingsToSupabase();
+                    initCustomizationMenu();
+                    alert('Фон загружен!');
                 };
                 reader.readAsDataURL(file);
             }
