@@ -36,6 +36,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
+            transition: opacity 0.5s ease;
         }
 
         /* Затемнение фона для лучшей читаемости */
@@ -60,6 +61,7 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             text-align: center;
             position: relative;
+            transition: transform 0.3s ease;
         }
 
         .profile-section {
@@ -75,6 +77,12 @@
             border: 3px solid #00b4d8;
             margin: 0 auto 15px;
             box-shadow: 0 0 25px rgba(0, 180, 216, 0.6);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
         }
 
         .name {
@@ -128,6 +136,12 @@
             border-radius: 8px;
             margin-right: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .album-cover:hover {
+            transform: scale(1.1);
         }
 
         .song-details {
@@ -278,6 +292,277 @@
             box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
         }
 
+        /* Кнопка входа */
+        .login-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 180, 216, 0.3);
+            border: 1px solid rgba(0, 180, 216, 0.5);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 180, 216, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Модальное окно входа */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 30, 30, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 180, 216, 0.5);
+            min-width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #00b4d8;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #00b4d8;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.primary {
+            background: #00b4d8;
+            color: #000;
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Меню кастомизации */
+        .customization-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+        }
+
+        .menu-header {
+            background: rgba(0, 180, 216, 0.2);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.5);
+        }
+
+        .menu-content {
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-section {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-section h3 {
+            color: #00b4d8;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .customization-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .option-item:hover {
+            border-color: #00b4d8;
+            transform: scale(1.05);
+        }
+
+        .option-item.active {
+            border-color: #00b4d8;
+            background: rgba(0, 180, 216, 0.2);
+        }
+
+        .option-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+
+        .option-item .song-cover {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        .input-with-btn {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-with-btn input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        .input-with-btn button {
+            padding: 10px 15px;
+            background: #00b4d8;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .song-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .song-item-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .song-item-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .action-btn.delete {
+            background: #ff4757;
+            color: white;
+        }
+
+        .action-btn.play {
+            background: #00b4d8;
+            color: black;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-menu:hover {
+            color: #00b4d8;
+            transform: scale(1.2);
+        }
+
         /* Анимация пульсации для аватара */
         @keyframes pulse {
             0% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
@@ -293,21 +578,32 @@
         .loading {
             opacity: 0.7;
         }
+
+        .error-message {
+            color: #ff4757;
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <!-- Видео фон -->
-    <video class="video-bg" autoplay muted loop playsinline>
+    <video class="video-bg" autoplay muted loop playsinline id="background-video">
         <source src="background.mp4" type="video/mp4">
         Ваш браузер не поддерживает видео.
     </video>
     <div class="bg-overlay"></div>
     
     <div class="bio-container">
+        <button class="login-btn" id="login-btn">
+            <i class="fas fa-cog"></i> Admin
+        </button>
+
         <div class="profile-section">
-            <img src="https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg" alt="Аватар" class="avatar">
-            <h1 class="name">mike nekrulov</h1>
-            <p class="bio-text">hey</p>
+            <img src="https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg" alt="Аватар" class="avatar" id="profile-avatar">
+            <h1 class="name" id="profile-name">mike nekrulov</h1>
+            <p class="bio-text" id="profile-bio">hey</p>
             <div class="view-counter">
                 <i class="fas fa-eye"></i>
                 <span id="view-count">0</span>
@@ -316,10 +612,10 @@
         
         <div class="music-player">
             <div class="song-info">
-                <img src="music1icon.jpg" alt="Обложка альбома" class="album-cover">
+                <img src="music1icon.jpg" alt="Обложка альбома" class="album-cover" id="current-album-cover">
                 <div class="song-details">
-                    <div class="song-title">типичная ситуация</div>
-                    <div class="song-artist">madk1d</div>
+                    <div class="song-title" id="current-song-title">типичная ситуация</div>
+                    <div class="song-artist" id="current-song-artist">madk1d</div>
                 </div>
             </div>
             
@@ -359,6 +655,98 @@
         </a>
     </div>
 
+    <!-- Модальное окно входа -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <h2>Вход в панель управления</h2>
+            <div class="input-group">
+                <label for="login-username">Логин</label>
+                <input type="text" id="login-username" placeholder="Введите логин">
+            </div>
+            <div class="input-group">
+                <label for="login-password">Пароль</label>
+                <input type="password" id="login-password" placeholder="Введите пароль">
+            </div>
+            <div class="error-message" id="login-error"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancel-login">Отмена</button>
+                <button class="modal-btn primary" id="confirm-login">Войти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Меню кастомизации -->
+    <div class="customization-menu" id="customization-menu">
+        <div class="menu-header">
+            <h2>Панель управления</h2>
+            <button class="close-menu" id="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="menu-content">
+            <div class="menu-section">
+                <h3>Фон страницы</h3>
+                <div class="customization-options" id="background-options">
+                    <!-- Опции фона будут добавлены динамически -->
+                </div>
+                <div class="input-with-btn">
+                    <input type="text" id="custom-background-url" placeholder="URL нового фона (видео или изображение)">
+                    <button id="add-background">Добавить фон</button>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <h3>Аватар профиля</h3>
+                <div class="customization-options" id="avatar-options">
+                    <!-- Опции аватаров будут добавлены динамически -->
+                </div>
+                <div class="input-with-btn">
+                    <input type="text" id="custom-avatar-url" placeholder="URL нового аватара">
+                    <button id="add-avatar">Добавить аватар</button>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <h3>Плейлист</h3>
+                <div id="playlist-management">
+                    <!-- Список песен будет добавлен динамически -->
+                </div>
+                <div style="margin-top: 15px;">
+                    <h4>Добавить новую песню</h4>
+                    <div class="input-group">
+                        <input type="text" id="new-song-title" placeholder="Название песни">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="new-song-artist" placeholder="Исполнитель">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="new-song-cover" placeholder="URL обложки">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="new-song-url" placeholder="URL аудио файла">
+                    </div>
+                    <button class="modal-btn primary" id="add-song" style="width: 100%;">Добавить песню</button>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <h3>Текст био</h3>
+                <div class="input-group">
+                    <input type="text" id="custom-bio" placeholder="Новый текст био">
+                </div>
+                <button class="modal-btn primary" id="save-bio" style="width: 100%;">Сохранить био</button>
+            </div>
+
+            <div class="menu-section">
+                <h3>Имя профиля</h3>
+                <div class="input-group">
+                    <input type="text" id="custom-name" placeholder="Новое имя">
+                </div>
+                <button class="modal-btn primary" id="save-name" style="width: 100%;">Сохранить имя</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Аудио элемент -->
     <audio id="audio-player">
         <!-- Источники будут установлены динамически -->
@@ -366,13 +754,18 @@
 
     <script>
         // Конфигурация Supabase - ЗАМЕНИТЕ НА СВОИ ДАННЫЕ
-        const SUPABASE_URL = 'https://yuxkougslrauvnrvlrip.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1eGtvdWdzbHJhdXZucnZscmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwMjIxNTgsImV4cCI6MjA3NzU5ODE1OH0.cCo4gfxlTsJMvPn2Sx4ehC0VyUZavs8yV837ur6fias';
+        const SUPABASE_URL = 'https://your-project.supabase.co';
+        const SUPABASE_ANON_KEY = 'your-anon-key';
         
         // Инициализация Supabase клиента
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Элементы управления музыкой
+        // Конфигурация администратора
+        const ADMIN_IP = '37.194.230.100';
+        const ADMIN_USERNAME = 'mikenekrulov';
+        const ADMIN_PASSWORD = 'Grabis5252';
+
+        // Элементы управления
         const audioPlayer = document.getElementById('audio-player');
         const playPauseBtn = document.querySelector('.play-pause');
         const prevBtn = document.querySelector('.prev-btn');
@@ -387,13 +780,45 @@
         const songArtist = document.querySelector('.song-artist');
         const albumCover = document.querySelector('.album-cover');
         const viewCountEl = document.getElementById('view-count');
+        const loginBtn = document.getElementById('login-btn');
+        const loginModal = document.getElementById('login-modal');
+        const customizationMenu = document.getElementById('customization-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const cancelLogin = document.getElementById('cancel-login');
+        const confirmLogin = document.getElementById('confirm-login');
+        const loginError = document.getElementById('login-error');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const profileName = document.getElementById('profile-name');
+        const profileBio = document.getElementById('profile-bio');
+        const backgroundVideo = document.getElementById('background-video');
 
-        // Состояние плеера
+        // Состояние приложения
         let isPlaying = false;
         let currentSongIndex = 0;
+        let isAdmin = false;
+        let userIP = '';
 
-        // Плейлист с локальными файлами
-        const playlist = [
+        // Настройки по умолчанию
+        let settings = {
+            backgrounds: [
+                { name: 'Темный', type: 'color', value: '#000000' },
+                { name: 'Синий градиент', type: 'color', value: 'linear-gradient(45deg, #000428, #004e92)' },
+                { name: 'Фиолетовый градиент', type: 'color', value: 'linear-gradient(45deg, #667eea, #764ba2)' },
+                { name: 'Видео фон', type: 'video', value: 'background.mp4' }
+            ],
+            avatars: [
+                { name: 'Текущий', url: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg' },
+                { name: 'Аватар 2', url: 'https://i.pinimg.com/736x/ab/5d/10/ab5d10d5c2b15f9f54cffa9f5f15c5d5.jpg' },
+                { name: 'Аватар 3', url: 'https://i.pinimg.com/736x/7d/8c/40/7d8c40adc1088d5d7e3f5c8a5e5a5a5a.jpg' }
+            ],
+            currentBackground: 'background.mp4',
+            currentAvatar: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg',
+            profileName: 'mike nekrulov',
+            profileBio: 'hey'
+        };
+
+        // Плейлист
+        let playlist = [
             {
                 title: "типичная ситуация",
                 artist: "madk1d",
@@ -420,160 +845,289 @@
             }
         }
 
-        // Функция для создания таблицы в Supabase (запустить один раз)
-        async function createViewsTable() {
-            try {
-                // Эта функция должна быть выполнена через Supabase SQL или в Dashboard
-                console.log('Таблица должна быть создана вручную в Supabase Dashboard');
-            } catch (error) {
-                console.error('Ошибка создания таблицы:', error);
-            }
-        }
-
-        // Функция для сохранения просмотра в Supabase
-        async function saveViewToSupabase(ipAddress, userAgent) {
-            try {
-                const { data, error } = await supabase
-                    .from('page_views')
-                    .insert([
-                        { 
-                            ip_address: ipAddress,
-                            user_agent: userAgent,
-                            viewed_at: new Date().toISOString()
-                        }
-                    ])
-                    .select();
-
-                if (error) {
-                    console.error('Ошибка сохранения в Supabase:', error);
-                    return false;
-                }
-
-                console.log('Просмотр сохранен в Supabase:', data);
+        // Проверка прав администратора
+        async function checkAdminAccess() {
+            userIP = await getUserIP();
+            if (userIP === ADMIN_IP) {
+                loginBtn.style.display = 'block';
                 return true;
-            } catch (error) {
-                console.error('Ошибка подключения к Supabase:', error);
-                return false;
             }
+            loginBtn.style.display = 'none';
+            return false;
         }
 
-        // Функция для получения общего количества уникальных просмотров
-        async function getTotalViews() {
-            try {
-                const { data, error, count } = await supabase
-                    .from('page_views')
-                    .select('ip_address', { count: 'exact', head: true })
-                    .not('ip_address', 'like', 'unknown-%');
-
-                if (error) {
-                    console.error('Ошибка получения данных:', error);
-                    return 0;
-                }
-
-                return count || 0;
-            } catch (error) {
-                console.error('Ошибка подключения:', error);
-                return 0;
-            }
+        // Аутентификация
+        function authenticate(username, password) {
+            return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
         }
 
-        // Функция для проверки существующего просмотра с этого IP
-        async function checkExistingView(ipAddress) {
-            try {
-                const { data, error } = await supabase
-                    .from('page_views')
-                    .select('id')
-                    .eq('ip_address', ipAddress)
-                    .limit(1);
-
-                if (error) {
-                    console.error('Ошибка проверки IP:', error);
-                    return false;
-                }
-
-                return data.length > 0;
-            } catch (error) {
-                console.error('Ошибка подключения:', error);
-                return false;
-            }
+        // Показать/скрыть модальное окно
+        function showModal(modal) {
+            modal.style.display = 'block';
         }
 
-        // Основная функция для работы со счетчиком просмотров
-        async function updateViewCounter() {
-            try {
-                // Показываем загрузку
-                viewCountEl.textContent = '...';
-                viewCountEl.classList.add('loading');
+        function hideModal(modal) {
+            modal.style.display = 'none';
+        }
 
-                // Получаем IP пользователя
-                const userIP = await getUserIP();
-                const userAgent = navigator.userAgent;
+        // Загрузка настроек из localStorage
+        function loadSettings() {
+            const saved = localStorage.getItem('profileSettings');
+            if (saved) {
+                settings = { ...settings, ...JSON.parse(saved) };
+            }
+            applySettings();
+        }
 
-                console.log('IP пользователя:', userIP);
+        // Сохранение настроек в localStorage
+        function saveSettings() {
+            localStorage.setItem('profileSettings', JSON.stringify(settings));
+        }
 
-                // Проверяем, был ли уже просмотр с этого IP
-                const hasViewed = await checkExistingView(userIP);
-                
-                if (!hasViewed) {
-                    // Сохраняем новый просмотр
-                    const saved = await saveViewToSupabase(userIP, userAgent);
-                    if (saved) {
-                        console.log('Новый просмотр сохранен');
-                    }
+        // Применение настроек
+        function applySettings() {
+            // Применяем фон
+            if (settings.currentBackground) {
+                if (settings.currentBackground.includes('.mp4') || settings.currentBackground.includes('.webm')) {
+                    backgroundVideo.src = settings.currentBackground;
+                    backgroundVideo.style.display = 'block';
+                    document.body.style.background = '#000';
                 } else {
-                    console.log('Повторный просмотр с этого IP');
+                    backgroundVideo.style.display = 'none';
+                    document.body.style.background = settings.currentBackground;
                 }
+            }
 
-                // Получаем общее количество просмотров
-                const totalViews = await getTotalViews();
-                viewCountEl.textContent = totalViews.toLocaleString();
-                viewCountEl.classList.remove('loading');
+            // Применяем аватар
+            if (settings.currentAvatar) {
+                profileAvatar.src = settings.currentAvatar;
+            }
 
-                // Сохраняем в localStorage для кэширования
-                localStorage.setItem('cachedViews', totalViews.toString());
-                localStorage.setItem('lastViewUpdate', Date.now().toString());
-
-            } catch (error) {
-                console.error('Ошибка обновления счетчика:', error);
-                // Fallback: используем кэшированные данные
-                const cachedViews = localStorage.getItem('cachedViews') || '0';
-                viewCountEl.textContent = parseInt(cachedViews).toLocaleString();
-                viewCountEl.classList.remove('loading');
+            // Применяем имя и био
+            if (settings.profileName) {
+                profileName.textContent = settings.profileName;
+            }
+            if (settings.profileBio) {
+                profileBio.textContent = settings.profileBio;
             }
         }
 
-        // Функция для инициализации кэшированных данных
-        function initializeCachedViews() {
-            const cachedViews = localStorage.getItem('cachedViews') || '0';
-            viewCountEl.textContent = parseInt(cachedViews).toLocaleString();
+        // Инициализация меню кастомизации
+        function initCustomizationMenu() {
+            // Заполняем опции фона
+            const backgroundOptions = document.getElementById('background-options');
+            backgroundOptions.innerHTML = '';
+            settings.backgrounds.forEach((bg, index) => {
+                const bgElement = document.createElement('div');
+                bgElement.className = `option-item ${bg.value === settings.currentBackground ? 'active' : ''}`;
+                bgElement.innerHTML = `
+                    <div style="width: 80px; height: 80px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 10px; margin-bottom: 8px;"></div>
+                    <div>${bg.name}</div>
+                `;
+                bgElement.onclick = () => selectBackground(bg.value);
+                backgroundOptions.appendChild(bgElement);
+            });
+
+            // Заполняем опции аватаров
+            const avatarOptions = document.getElementById('avatar-options');
+            avatarOptions.innerHTML = '';
+            settings.avatars.forEach((avatar, index) => {
+                const avatarElement = document.createElement('div');
+                avatarElement.className = `option-item ${avatar.url === settings.currentAvatar ? 'active' : ''}`;
+                avatarElement.innerHTML = `
+                    <img src="${avatar.url}" alt="${avatar.name}">
+                    <div>${avatar.name}</div>
+                `;
+                avatarElement.onclick = () => selectAvatar(avatar.url);
+                avatarOptions.appendChild(avatarElement);
+            });
+
+            // Заполняем управление плейлистом
+            updatePlaylistManagement();
         }
 
-        // Инициализация плеера
+        // Выбор фона
+        function selectBackground(background) {
+            settings.currentBackground = background;
+            applySettings();
+            saveSettings();
+            initCustomizationMenu();
+        }
+
+        // Выбор аватара
+        function selectAvatar(avatarUrl) {
+            settings.currentAvatar = avatarUrl;
+            applySettings();
+            saveSettings();
+            initCustomizationMenu();
+        }
+
+        // Обновление управления плейлистом
+        function updatePlaylistManagement() {
+            const playlistManagement = document.getElementById('playlist-management');
+            playlistManagement.innerHTML = '';
+
+            playlist.forEach((song, index) => {
+                const songElement = document.createElement('div');
+                songElement.className = 'song-item';
+                songElement.innerHTML = `
+                    <div class="song-item-info">
+                        <img src="${song.cover}" alt="Cover" class="song-cover">
+                        <div>
+                            <div><strong>${song.title}</strong></div>
+                            <div>${song.artist}</div>
+                        </div>
+                    </div>
+                    <div class="song-item-actions">
+                        <button class="action-btn play" onclick="playSong(${index})">▶</button>
+                        <button class="action-btn delete" onclick="removeSong(${index})">✕</button>
+                    </div>
+                `;
+                playlistManagement.appendChild(songElement);
+            });
+        }
+
+        // Воспроизведение песни из меню
+        function playSong(index) {
+            currentSongIndex = index;
+            loadSong(currentSongIndex);
+            if (!isPlaying) {
+                togglePlay();
+            }
+        }
+
+        // Удаление песни
+        function removeSong(index) {
+            if (playlist.length > 1) {
+                playlist.splice(index, 1);
+                if (currentSongIndex >= index && currentSongIndex > 0) {
+                    currentSongIndex--;
+                }
+                updatePlaylistManagement();
+                savePlaylist();
+                if (index === currentSongIndex) {
+                    loadSong(currentSongIndex);
+                }
+            } else {
+                alert('Нельзя удалить последнюю песню из плейлиста');
+            }
+        }
+
+        // Сохранение плейлиста
+        function savePlaylist() {
+            localStorage.setItem('userPlaylist', JSON.stringify(playlist));
+        }
+
+        // Загрузка плейлиста
+        function loadPlaylist() {
+            const saved = localStorage.getItem('userPlaylist');
+            if (saved) {
+                playlist = JSON.parse(saved);
+            }
+        }
+
+        // Добавление новой песни
+        function addNewSong() {
+            const title = document.getElementById('new-song-title').value;
+            const artist = document.getElementById('new-song-artist').value;
+            const cover = document.getElementById('new-song-cover').value;
+            const url = document.getElementById('new-song-url').value;
+
+            if (title && artist && cover && url) {
+                playlist.push({
+                    title: title,
+                    artist: artist,
+                    cover: cover,
+                    src: url
+                });
+                updatePlaylistManagement();
+                savePlaylist();
+                
+                // Очищаем поля
+                document.getElementById('new-song-title').value = '';
+                document.getElementById('new-song-artist').value = '';
+                document.getElementById('new-song-cover').value = '';
+                document.getElementById('new-song-url').value = '';
+                
+                alert('Песня добавлена в плейлист!');
+            } else {
+                alert('Заполните все поля!');
+            }
+        }
+
+        // Добавление пользовательского фона
+        function addCustomBackground() {
+            const url = document.getElementById('custom-background-url').value;
+            if (url) {
+                settings.backgrounds.push({
+                    name: 'Пользовательский фон',
+                    type: url.includes('.mp4') || url.includes('.webm') ? 'video' : 'color',
+                    value: url
+                });
+                document.getElementById('custom-background-url').value = '';
+                initCustomizationMenu();
+                saveSettings();
+                alert('Фон добавлен!');
+            }
+        }
+
+        // Добавление пользовательского аватара
+        function addCustomAvatar() {
+            const url = document.getElementById('custom-avatar-url').value;
+            if (url) {
+                settings.avatars.push({
+                    name: 'Пользовательский аватар',
+                    url: url
+                });
+                document.getElementById('custom-avatar-url').value = '';
+                initCustomizationMenu();
+                saveSettings();
+                alert('Аватар добавлен!');
+            }
+        }
+
+        // Сохранение био
+        function saveBio() {
+            const bio = document.getElementById('custom-bio').value;
+            if (bio) {
+                settings.profileBio = bio;
+                applySettings();
+                saveSettings();
+                document.getElementById('custom-bio').value = '';
+                alert('Био обновлено!');
+            }
+        }
+
+        // Сохранение имени
+        function saveName() {
+            const name = document.getElementById('custom-name').value;
+            if (name) {
+                settings.profileName = name;
+                applySettings();
+                saveSettings();
+                document.getElementById('custom-name').value = '';
+                alert('Имя обновлено!');
+            }
+        }
+
+        // Функции музыкального плеера (остаются без изменений)
         function initPlayer() {
             loadSong(currentSongIndex);
             updateProgressBar();
-            
-            // Установка громкости
             audioPlayer.volume = volumeSlider.value / 100;
             updateVolumeIcon();
         }
 
-        // Загрузка песни
         function loadSong(index) {
             const song = playlist[index];
             songTitle.textContent = song.title;
             songArtist.textContent = song.artist;
             albumCover.src = song.cover;
-            
-            // Устанавливаем источник аудио
             audioPlayer.src = song.src;
             audioPlayer.load();
-            
-            // Сброс времени
             currentTimeEl.textContent = "0:00";
             progressBar.style.width = "0%";
             
-            // Обновление общего времени после загрузки метаданных
             audioPlayer.addEventListener('loadedmetadata', function() {
                 const totalMinutes = Math.floor(audioPlayer.duration / 60);
                 const totalSeconds = Math.floor(audioPlayer.duration % 60);
@@ -581,7 +1135,6 @@
             });
         }
 
-        // Воспроизведение/пауза
         function togglePlay() {
             if (isPlaying) {
                 audioPlayer.pause();
@@ -593,45 +1146,33 @@
             isPlaying = !isPlaying;
         }
 
-        // Следующий трек
         function nextSong() {
             currentSongIndex = (currentSongIndex + 1) % playlist.length;
             loadSong(currentSongIndex);
-            if (isPlaying) {
-                audioPlayer.play();
-            }
+            if (isPlaying) audioPlayer.play();
         }
 
-        // Предыдущий трек
         function prevSong() {
             currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
             loadSong(currentSongIndex);
-            if (isPlaying) {
-                audioPlayer.play();
-            }
+            if (isPlaying) audioPlayer.play();
         }
 
-        // Обновление прогресс-бара
         function updateProgressBar() {
-            // Обновление текущего времени
             const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
             const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
             currentTimeEl.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
             
-            // Обновление прогресс-бара
             if (audioPlayer.duration) {
                 const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
                 progressBar.style.width = `${progressPercent}%`;
             }
             
-            // Продолжаем обновление
             requestAnimationFrame(updateProgressBar);
         }
 
-        // Обновление иконки громкости
         function updateVolumeIcon() {
             const volume = audioPlayer.volume;
-            
             if (volume === 0) {
                 volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
             } else if (volume < 0.5) {
@@ -641,22 +1182,18 @@
             }
         }
 
-        // Установка громкости
         function setVolume() {
             const volume = volumeSlider.value / 100;
             audioPlayer.volume = volume;
             updateVolumeIcon();
         }
 
-        // Переключение звука при клике на иконку
         function toggleMute() {
             if (audioPlayer.volume > 0) {
-                // Сохраняем текущую громкость перед выключением
                 volumeSlider.dataset.previousVolume = volumeSlider.value;
                 audioPlayer.volume = 0;
                 volumeSlider.value = 0;
             } else {
-                // Восстанавливаем предыдущую громкость
                 const previousVolume = volumeSlider.dataset.previousVolume || 70;
                 audioPlayer.volume = previousVolume / 100;
                 volumeSlider.value = previousVolume;
@@ -664,12 +1201,10 @@
             updateVolumeIcon();
         }
 
-        // Перемотка при клике на прогресс-бар
         function setProgress(e) {
             const width = this.clientWidth;
             const clickX = e.offsetX;
             const duration = audioPlayer.duration;
-            
             audioPlayer.currentTime = (clickX / width) * duration;
         }
 
@@ -680,15 +1215,43 @@
         volumeSlider.addEventListener('input', setVolume);
         volumeIcon.addEventListener('click', toggleMute);
         progressContainer.addEventListener('click', setProgress);
-
-        // Автопереход к следующему треку
         audioPlayer.addEventListener('ended', nextSong);
 
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
+        // Обработчики для системы администрирования
+        loginBtn.addEventListener('click', () => showModal(loginModal));
+        cancelLogin.addEventListener('click', () => hideModal(loginModal));
+        closeMenu.addEventListener('click', () => hideModal(customizationMenu));
+
+        confirmLogin.addEventListener('click', () => {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (authenticate(username, password)) {
+                isAdmin = true;
+                hideModal(loginModal);
+                showModal(customizationMenu);
+                initCustomizationMenu();
+                loginError.textContent = '';
+            } else {
+                loginError.textContent = 'Неверный логин или пароль';
+            }
+        });
+
+        // Обработчики для меню кастомизации
+        document.getElementById('add-background').addEventListener('click', addCustomBackground);
+        document.getElementById('add-avatar').addEventListener('click', addCustomAvatar);
+        document.getElementById('add-song').addEventListener('click', addNewSong);
+        document.getElementById('save-bio').addEventListener('click', saveBio);
+        document.getElementById('save-name').addEventListener('click', saveName);
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkAdminAccess();
+            loadSettings();
+            loadPlaylist();
             initPlayer();
-            initializeCachedViews(); // Показываем кэшированные данные сразу
-            updateViewCounter(); // Затем обновляем из Supabase
+            // initializeCachedViews();
+            // updateViewCounter();
         });
     </script>
 </body>
