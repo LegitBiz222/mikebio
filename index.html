@@ -790,11 +790,6 @@
             outline: none;
             border-color: #00b4d8;
         }
-
-        /* Динамические стили для цветов */
-        .dynamic-color {
-            transition: all 0.3s ease;
-        }
     </style>
 </head>
 <body>
@@ -1270,7 +1265,7 @@
         function applySettings() {
             console.log('Применение настроек, текущий цвет:', settings.currentColor);
             
-            // Применяем цвет - ОСНОВНОЕ ИСПРАВЛЕНИЕ
+            // Применяем цвет
             applyColor(settings.currentColor);
 
             // Применяем фон
@@ -1316,11 +1311,11 @@
             updateLinksDisplay();
         }
 
-        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА - НОВАЯ ФУНКЦИЯ
+        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА - ПОЛНОСТЬЮ ПЕРЕПИСАНА
         function applyColor(color) {
             console.log('Применение цвета:', color);
             
-            // Создаем затемненную версию цвета
+            // Создаем затемненную версию цвета для градиентов
             function darkenColor(hex, percent) {
                 let r = parseInt(hex.slice(1, 3), 16);
                 let g = parseInt(hex.slice(3, 5), 16);
@@ -1335,68 +1330,209 @@
 
             const darkColor = darkenColor(color, 20);
             const shadowColor = color + '40'; // прозрачность 25%
+            const lightShadowColor = color + '80'; // более яркая тень для аватара
 
-            // Применяем ко всем элементам с цветом
-            const elementsToColor = [
-                // Аватар
-                { selector: '.avatar', properties: ['border-color', 'box-shadow'] },
-                
-                // Социальные ссылки
-                { selector: '.social-link:hover', properties: ['background-color'] },
-                
-                // Счетчик просмотров
-                { selector: '.global-view-counter', properties: ['background-color', 'border-color'] },
-                
-                // Кнопки плеера
-                { selector: '.control-btn:hover', properties: ['color'] },
-                { selector: '.play-pause', properties: ['background-color'] },
-                
-                // Прогресс-бар
-                { selector: '.progress', properties: ['background'] },
-                
-                // Ползунок громкости
-                { selector: '.volume-slider::-webkit-slider-thumb', properties: ['background'] },
-                { selector: '.volume-icon:hover', properties: ['color'] },
-                
-                // Кнопка входа
-                { selector: '.login-btn', properties: ['background-color', 'border-color'] },
-                
-                // Модальные окна
-                { selector: '.modal-content', properties: ['border-color'] },
-                { selector: '.modal h2', properties: ['color'] },
-                { selector: '.modal-btn.primary', properties: ['background-color'] },
-                
-                // Меню кастомизации
-                { selector: '.menu-section h3', properties: ['color', 'border-bottom-color'] },
-                { selector: '.option-item:hover', properties: ['border-color'] },
-                { selector: '.option-item.active', properties: ['border-color', 'background-color'] },
-                { selector: '.selected-badge', properties: ['background-color'] },
-                { selector: '.input-with-btn button', properties: ['background-color'] },
-                { selector: '.small-btn', properties: ['background-color'] },
-                { selector: '.file-input-label', properties: ['background-color'] },
-                { selector: '.add-song-form h4', properties: ['color'] },
-                { selector: '.action-btn.play', properties: ['background-color'] }
-            ];
+            // 1. АВАТАР - свечение под аватаром
+            const avatar = document.querySelector('.avatar');
+            avatar.style.borderColor = color;
+            avatar.style.boxShadow = `0 0 25px ${lightShadowColor}`;
+            
+            // Обновляем анимацию пульсации для аватара
+            const style = document.createElement('style');
+            style.id = 'avatar-pulse-animation';
+            style.textContent = `
+                @keyframes pulse {
+                    0% { box-shadow: 0 0 20px ${lightShadowColor}; }
+                    50% { box-shadow: 0 0 30px ${lightShadowColor}; }
+                    100% { box-shadow: 0 0 20px ${lightShadowColor}; }
+                }
+            `;
+            const existingStyle = document.getElementById('avatar-pulse-animation');
+            if (existingStyle) {
+                existingStyle.remove();
+            }
+            document.head.appendChild(style);
 
-            // Применяем цвета через инлайн стили
-            elementsToColor.forEach(item => {
-                const elements = document.querySelectorAll(item.selector);
-                elements.forEach(element => {
-                    item.properties.forEach(property => {
-                        if (property === 'background') {
-                            element.style.background = `linear-gradient(90deg, ${color}, ${darkColor})`;
-                        } else if (property === 'box-shadow') {
-                            element.style.boxShadow = `0 0 25px ${shadowColor}`;
-                        } else {
-                            element.style[property] = color;
-                        }
-                    });
+            // 2. СОЦИАЛЬНЫЕ ССЫЛКИ - ховер эффект
+            const socialLinks = document.querySelectorAll('.social-link');
+            socialLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = color;
+                });
+                link.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
                 });
             });
 
-            // Особые случаи
-            document.querySelector('.play-pause').style.background = shadowColor;
-            document.querySelector('.option-item.active').style.background = shadowColor;
+            // 3. СЧЕТЧИК ПРОСМОТРОВ
+            const viewCounter = document.querySelector('.global-view-counter');
+            viewCounter.style.backgroundColor = shadowColor;
+            viewCounter.style.borderColor = color;
+
+            // 4. КНОПКИ ПЛЕЕРА - ховер эффект
+            const controlBtns = document.querySelectorAll('.control-btn');
+            controlBtns.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.color = color;
+                    this.style.backgroundColor = shadowColor;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.style.color = '#fff';
+                    this.style.backgroundColor = 'transparent';
+                });
+            });
+
+            // Кнопка play/pause
+            const playPause = document.querySelector('.play-pause');
+            playPause.style.backgroundColor = shadowColor;
+
+            // 5. ПРОГРЕСС-БАР
+            const progress = document.querySelector('.progress');
+            progress.style.background = `linear-gradient(90deg, ${color}, ${darkColor})`;
+            progress.style.boxShadow = `0 0 10px ${shadowColor}`;
+
+            // 6. ПОЛЗУНОК ГРОМКОСТИ
+            const volumeThumb = document.querySelector('.volume-slider::-webkit-slider-thumb');
+            // Создаем новый стиль для ползунка громкости
+            const volumeStyle = document.createElement('style');
+            volumeStyle.id = 'volume-slider-style';
+            volumeStyle.textContent = `
+                .volume-slider::-webkit-slider-thumb {
+                    background: ${color} !important;
+                    box-shadow: 0 0 8px ${shadowColor} !important;
+                }
+                .volume-slider::-webkit-slider-thumb:hover {
+                    background: ${darkColor} !important;
+                    transform: scale(1.2);
+                }
+            `;
+            const existingVolumeStyle = document.getElementById('volume-slider-style');
+            if (existingVolumeStyle) {
+                existingVolumeStyle.remove();
+            }
+            document.head.appendChild(volumeStyle);
+
+            // Иконка громкости
+            const volumeIcon = document.querySelector('.volume-icon');
+            volumeIcon.addEventListener('mouseenter', function() {
+                this.style.color = color;
+            });
+            volumeIcon.addEventListener('mouseleave', function() {
+                this.style.color = '#fff';
+            });
+
+            // 7. КНОПКА ВХОДА
+            const loginBtn = document.querySelector('.login-btn');
+            loginBtn.style.backgroundColor = shadowColor;
+            loginBtn.style.borderColor = color;
+
+            // 8. МОДАЛЬНЫЕ ОКНА
+            const modalContent = document.querySelector('.modal-content');
+            if (modalContent) {
+                modalContent.style.borderColor = color;
+            }
+            
+            const modalTitle = document.querySelector('.modal h2');
+            if (modalTitle) {
+                modalTitle.style.color = color;
+            }
+            
+            const modalPrimaryBtn = document.querySelector('.modal-btn.primary');
+            if (modalPrimaryBtn) {
+                modalPrimaryBtn.style.backgroundColor = color;
+            }
+
+            // 9. МЕНЮ КАСТОМИЗАЦИИ
+            const menuTitles = document.querySelectorAll('.menu-section h3');
+            menuTitles.forEach(title => {
+                title.style.color = color;
+                title.style.borderBottomColor = color;
+            });
+
+            const optionItems = document.querySelectorAll('.option-item');
+            optionItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.borderColor = color;
+                    }
+                });
+                item.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('active')) {
+                        this.style.borderColor = 'transparent';
+                    }
+                });
+            });
+
+            const activeOptions = document.querySelectorAll('.option-item.active');
+            activeOptions.forEach(item => {
+                item.style.borderColor = color;
+                item.style.backgroundColor = shadowColor;
+            });
+
+            const selectedBadges = document.querySelectorAll('.selected-badge');
+            selectedBadges.forEach(badge => {
+                badge.style.backgroundColor = color;
+            });
+
+            const inputButtons = document.querySelectorAll('.input-with-btn button');
+            inputButtons.forEach(btn => {
+                btn.style.backgroundColor = color;
+                btn.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = darkColor;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = color;
+                });
+            });
+
+            const smallBtns = document.querySelectorAll('.small-btn');
+            smallBtns.forEach(btn => {
+                btn.style.backgroundColor = color;
+                btn.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = darkColor;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = color;
+                });
+            });
+
+            const fileInputLabels = document.querySelectorAll('.file-input-label');
+            fileInputLabels.forEach(label => {
+                label.style.backgroundColor = color;
+                label.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = darkColor;
+                });
+                label.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = color;
+                });
+            });
+
+            const formTitles = document.querySelectorAll('.add-song-form h4');
+            formTitles.forEach(title => {
+                title.style.color = color;
+            });
+
+            const playBtns = document.querySelectorAll('.action-btn.play');
+            playBtns.forEach(btn => {
+                btn.style.backgroundColor = color;
+                btn.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = darkColor;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = color;
+                });
+            });
+
+            // 10. ФОКУС НА ПОЛЯХ ВВОДА
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = color;
+                });
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                });
+            });
         }
 
         // Обновление отображения ссылок
@@ -1562,7 +1698,7 @@
             initCustomizationMenu();
         }
 
-        // ВЫБОР ЦВЕТА - ИСПРАВЛЕННАЯ ФУНКЦИЯ
+        // ВЫБОР ЦВЕТА
         function selectColor(color) {
             console.log('Выбран цвет:', color);
             settings.currentColor = color;
