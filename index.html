@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* Все стили остаются такими же как в предыдущей версии */
         * {
             margin: 0;
             padding: 0;
@@ -805,6 +804,15 @@
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
         }
+
+        .reset-btn {
+            background: #ff6b6b !important;
+            margin-top: 10px;
+        }
+
+        .reset-btn:hover {
+            background: #ff5252 !important;
+        }
     </style>
 </head>
 <body>
@@ -900,8 +908,69 @@
             </button>
         </div>
         <div class="menu-content">
-            <!-- Остальные секции остаются без изменений -->
-            
+            <!-- Background Section -->
+            <div class="menu-section">
+                <h3>background</h3>
+                <div class="customization-options" id="background-options">
+                    <!-- Опции фона будут добавлены динамически -->
+                </div>
+                <div class="input-with-btn">
+                    <input type="text" id="custom-background-url" placeholder="URL нового фона">
+                    <button id="add-background">добавить фон</button>
+                </div>
+                <div class="file-input-wrapper" style="margin-top: 10px;">
+                    <input type="file" id="background-file" accept="image/*,video/*">
+                    <label for="background-file" class="file-input-label">Загрузить фон</label>
+                </div>
+            </div>
+
+            <!-- Avatar Section -->
+            <div class="menu-section">
+                <h3>avatar</h3>
+                <div class="customization-options" id="avatar-options">
+                    <!-- Опции аватаров будут добавлены динамически -->
+                </div>
+                <div class="file-input-wrapper">
+                    <input type="file" id="avatar-file" accept="image/*">
+                    <label for="avatar-file" class="file-input-label">Загрузить аватар</label>
+                </div>
+            </div>
+
+            <!-- Color Section -->
+            <div class="menu-section">
+                <h3>цвет сайта</h3>
+                <div class="customization-options" id="color-options">
+                    <!-- Цвета будут добавлены динамически -->
+                </div>
+                <div class="input-with-btn">
+                    <input type="color" id="custom-color" value="#00b4d8">
+                    <button id="apply-custom-color">применить цвет</button>
+                </div>
+            </div>
+
+            <!-- Cursor Section -->
+            <div class="menu-section">
+                <h3>курсор</h3>
+                <div class="customization-options" id="cursor-options">
+                    <!-- Курсоры будут добавлены динамически -->
+                </div>
+                <div class="file-input-wrapper">
+                    <input type="file" id="cursor-file" accept=".png,.webp,.jpg,.jpeg,.cur">
+                    <label for="cursor-file" class="file-input-label">Загрузить курсор</label>
+                </div>
+            </div>
+
+            <!-- Font Section -->
+            <div class="menu-section">
+                <h3>шрифт</h3>
+                <div class="file-input-wrapper">
+                    <input type="file" id="font-file" accept=".woff,.woff2,.ttf,.otf">
+                    <label for="font-file" class="file-input-label">Загрузить шрифт</label>
+                </div>
+                <button class="small-btn" id="reset-font" style="width: 100%; margin-top: 10px;">Сбросить шрифт</button>
+            </div>
+
+            <!-- Playlist Section -->
             <div class="menu-section">
                 <h3>playlist</h3>
                 <div id="playlist-management"></div>
@@ -941,7 +1010,93 @@
                 </div>
             </div>
 
-            <!-- Остальные секции -->
+            <!-- Links Section -->
+            <div class="menu-section">
+                <h3>links</h3>
+                <div id="links-management"></div>
+                <div class="add-song-form">
+                    <h4>Добавить новую ссылку</h4>
+                    <div class="form-group">
+                        <input type="text" id="new-link-name" placeholder="Название (YouTube, Steam...)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="new-link-url" placeholder="URL ссылки">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="new-link-icon" placeholder="URL иконки (опционально)">
+                    </div>
+                    <button class="small-btn" id="add-link" style="width: 100%;">добавить ссылку</button>
+                </div>
+            </div>
+
+            <!-- Description Section -->
+            <div class="menu-section">
+                <h3>description</h3>
+                <div class="input-group">
+                    <input type="text" id="custom-bio" placeholder="Новый текст описания">
+                </div>
+                <button class="small-btn" id="save-bio" style="width: 100%;">изменить описание</button>
+            </div>
+
+            <!-- Nickname Section -->
+            <div class="menu-section">
+                <h3>nickname</h3>
+                <div class="input-group">
+                    <input type="text" id="custom-name" placeholder="Новое имя">
+                </div>
+                <button class="small-btn" id="save-name" style="width: 100%;">изменить ник</button>
+            </div>
+
+            <!-- Reset Section -->
+            <div class="menu-section">
+                <h3>сброс настроек</h3>
+                <p style="color: #aaa; font-size: 12px; margin-bottom: 15px;">
+                    Внимание: это действие нельзя отменить! Все ваши настройки будут сброшены к значениям по умолчанию.
+                </p>
+                <button class="small-btn reset-btn" id="reset-all" style="width: 100%;">
+                    <i class="fas fa-trash"></i> Сбросить все настройки
+                </button>
+            </div>
+
+            <!-- Export/Import Section -->
+            <div class="menu-section">
+                <h3>экспорт / импорт</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <button class="small-btn" id="export-settings" style="flex: 1;">
+                        <i class="fas fa-download"></i> Экспорт настроек
+                    </button>
+                    <button class="small-btn" id="import-settings" style="flex: 1;">
+                        <i class="fas fa-upload"></i> Импорт настроек
+                    </button>
+                </div>
+                <div class="file-input-wrapper">
+                    <input type="file" id="import-file" accept=".json">
+                    <label for="import-file" class="file-input-label">Выбрать файл для импорта</label>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="menu-section">
+                <h3>статистика</h3>
+                <div style="color: #aaa; font-size: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>Просмотров страницы:</span>
+                        <span id="stats-views">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>Песен в плейлисте:</span>
+                        <span id="stats-songs">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>Ссылок:</span>
+                        <span id="stats-links">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Последнее обновление:</span>
+                        <span id="stats-last-update">-</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="menu-footer">by mike nekrulov</div>
     </div>
@@ -1268,7 +1423,7 @@
             }
         }
 
-        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА (остается без изменений)
+        // ФУНКЦИЯ ПРИМЕНЕНИЯ ЦВЕТА
         function applyColor(color) {
             console.log('Применение цвета:', color);
             
@@ -1288,8 +1443,107 @@
             const shadowColor = color + '40';
             const lightShadowColor = color + '80';
 
-            // Применяем цвета ко всем элементам (код остается таким же как в предыдущей версии)
-            // ... (полный код applyColor из предыдущей версии)
+            // Применяем цвета ко всем элементам
+            const elementsToColor = [
+                // Аватар
+                { selector: '.avatar', properties: ['border-color', 'box-shadow'] },
+                
+                // Социальные ссылки
+                { selector: '.social-link:hover', properties: ['background-color'] },
+                
+                // Счетчик просмотров
+                { selector: '.global-view-counter', properties: ['background-color', 'border-color'] },
+                
+                // Кнопки плеера
+                { selector: '.control-btn:hover', properties: ['color'] },
+                { selector: '.play-pause', properties: ['background-color'] },
+                
+                // Прогресс-бар
+                { selector: '.progress', properties: ['background'] },
+                
+                // Ползунок громкости
+                { selector: '.volume-slider::-webkit-slider-thumb', properties: ['background'] },
+                { selector: '.volume-icon:hover', properties: ['color'] },
+                
+                // Кнопка входа
+                { selector: '.login-btn', properties: ['background-color', 'border-color'] },
+                
+                // Модальные окна
+                { selector: '.modal-content', properties: ['border-color'] },
+                { selector: '.modal h2', properties: ['color'] },
+                { selector: '.modal-btn.primary', properties: ['background-color'] },
+                
+                // Меню кастомизации
+                { selector: '.menu-section h3', properties: ['color', 'border-bottom-color'] },
+                { selector: '.option-item:hover', properties: ['border-color'] },
+                { selector: '.option-item.active', properties: ['border-color', 'background-color'] },
+                { selector: '.selected-badge', properties: ['background-color'] },
+                { selector: '.input-with-btn button', properties: ['background-color'] },
+                { selector: '.small-btn', properties: ['background-color'] },
+                { selector: '.file-input-label', properties: ['background-color'] },
+                { selector: '.add-song-form h4', properties: ['color'] },
+                { selector: '.action-btn.play', properties: ['background-color'] }
+            ];
+
+            // Применяем цвета через инлайн стили
+            elementsToColor.forEach(item => {
+                const elements = document.querySelectorAll(item.selector);
+                elements.forEach(element => {
+                    item.properties.forEach(property => {
+                        if (property === 'background') {
+                            element.style.background = `linear-gradient(90deg, ${color}, ${darkColor})`;
+                        } else if (property === 'box-shadow') {
+                            element.style.boxShadow = `0 0 25px ${lightShadowColor}`;
+                        } else {
+                            element.style[property] = color;
+                        }
+                    });
+                });
+            });
+
+            // Особые случаи
+            const playPause = document.querySelector('.play-pause');
+            if (playPause) playPause.style.background = shadowColor;
+
+            const activeOptions = document.querySelectorAll('.option-item.active');
+            activeOptions.forEach(item => {
+                item.style.background = shadowColor;
+            });
+
+            // Обновляем анимацию пульсации для аватара
+            const style = document.createElement('style');
+            style.id = 'avatar-pulse-animation';
+            style.textContent = `
+                @keyframes pulse {
+                    0% { box-shadow: 0 0 20px ${lightShadowColor}; }
+                    50% { box-shadow: 0 0 30px ${lightShadowColor}; }
+                    100% { box-shadow: 0 0 20px ${lightShadowColor}; }
+                }
+            `;
+            const existingStyle = document.getElementById('avatar-pulse-animation');
+            if (existingStyle) {
+                existingStyle.remove();
+            }
+            document.head.appendChild(style);
+
+            // Создаем новый стиль для ползунка громкости
+            const volumeStyle = document.createElement('style');
+            volumeStyle.id = 'volume-slider-style';
+            volumeStyle.textContent = `
+                .volume-slider::-webkit-slider-thumb {
+                    background: ${color} !important;
+                    box-shadow: 0 0 8px ${shadowColor} !important;
+                }
+                .volume-slider::-webkit-slider-thumb:hover {
+                    background: ${darkColor} !important;
+                    transform: scale(1.2);
+                }
+            `;
+            const existingVolumeStyle = document.getElementById('volume-slider-style');
+            if (existingVolumeStyle) {
+                existingVolumeStyle.remove();
+            }
+            document.head.appendChild(volumeStyle);
         }
 
         // Обновление отображения ссылок
@@ -1315,6 +1569,88 @@
             initColorOptions();
             updatePlaylistManagement();
             updateLinksManagement();
+            updateStatistics();
+        }
+
+        function initBackgroundOptions() {
+            const backgroundOptions = document.getElementById('background-options');
+            backgroundOptions.innerHTML = '';
+            settings.backgrounds.forEach((bg, index) => {
+                const bgElement = document.createElement('div');
+                const isActive = bg.value === settings.currentBackground;
+                bgElement.className = `option-item ${isActive ? 'active' : ''}`;
+                bgElement.innerHTML = `
+                    <div style="width: 70px; height: 70px; background: ${bg.type === 'color' ? bg.value : 'linear-gradient(45deg, #667eea, #764ba2)'}; border-radius: 10px; margin-bottom: 8px;"></div>
+                    <div>${bg.name}</div>
+                    ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
+                    ${index > 3 ? `<button class="delete-btn" onclick="deleteBackground(${index})">×</button>` : ''}
+                `;
+                bgElement.onclick = () => selectBackground(bg.value);
+                backgroundOptions.appendChild(bgElement);
+            });
+        }
+
+        function initAvatarOptions() {
+            const avatarOptions = document.getElementById('avatar-options');
+            avatarOptions.innerHTML = '';
+            settings.avatars.forEach((avatar, index) => {
+                const avatarElement = document.createElement('div');
+                const isActive = avatar.url === settings.currentAvatar;
+                avatarElement.className = `option-item ${isActive ? 'active' : ''}`;
+                avatarElement.innerHTML = `
+                    <img src="${avatar.url}" alt="${avatar.name}">
+                    <div>${avatar.name}</div>
+                    ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
+                    ${index > 0 ? `<button class="delete-btn" onclick="deleteAvatar(${index})">×</button>` : ''}
+                `;
+                avatarElement.onclick = () => selectAvatar(avatar.url);
+                avatarOptions.appendChild(avatarElement);
+            });
+        }
+
+        function initCursorOptions() {
+            const cursorOptions = document.getElementById('cursor-options');
+            cursorOptions.innerHTML = '';
+            settings.cursors.forEach((cursor, index) => {
+                const cursorElement = document.createElement('div');
+                const isActive = cursor.url === settings.currentCursor;
+                cursorElement.className = `option-item ${isActive ? 'active' : ''}`;
+                if (cursor.url === 'default') {
+                    cursorElement.innerHTML = `
+                        <div style="width: 50px; height: 50px; background: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
+                            <i class="fas fa-mouse-pointer" style="font-size: 20px;"></i>
+                        </div>
+                        <div>${cursor.name}</div>
+                        ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
+                    `;
+                } else {
+                    cursorElement.innerHTML = `
+                        <img src="${cursor.url}" style="width: 50px; height: 50px; object-fit: contain;">
+                        <div>${cursor.name}</div>
+                        ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
+                        <button class="delete-btn" onclick="deleteCursor(${index})">×</button>
+                    `;
+                }
+                cursorElement.onclick = () => selectCursor(cursor.url);
+                cursorOptions.appendChild(cursorElement);
+            });
+        }
+
+        function initColorOptions() {
+            const colorOptions = document.getElementById('color-options');
+            colorOptions.innerHTML = '';
+            settings.colors.forEach((color, index) => {
+                const colorElement = document.createElement('div');
+                const isActive = color.value === settings.currentColor;
+                colorElement.className = `option-item ${isActive ? 'active' : ''}`;
+                colorElement.innerHTML = `
+                    <div class="color-option" style="background: ${color.value}"></div>
+                    <div>${color.name}</div>
+                    ${isActive ? '<div class="selected-badge">Выбран</div>' : ''}
+                `;
+                colorElement.onclick = () => selectColor(color.value);
+                colorOptions.appendChild(colorElement);
+            });
         }
 
         // Обновление управления плейлистом
@@ -1347,6 +1683,38 @@
             });
         }
 
+        // Обновление управления ссылками
+        function updateLinksManagement() {
+            const linksManagement = document.getElementById('links-management');
+            linksManagement.innerHTML = '';
+
+            settings.links.forEach((link, index) => {
+                const linkElement = document.createElement('div');
+                linkElement.className = 'link-item';
+                linkElement.innerHTML = `
+                    <div class="link-item-info">
+                        ${link.icon ? `<img src="${link.icon}" alt="${link.name}" class="link-icon">` : '<i class="fas fa-link"></i>'}
+                        <div>
+                            <div><strong>${link.name}</strong></div>
+                            <div style="font-size: 10px; color: #aaa;">${link.url}</div>
+                        </div>
+                    </div>
+                    <div class="song-item-actions">
+                        <button class="action-btn delete" onclick="removeLink(${index})">✕</button>
+                    </div>
+                `;
+                linksManagement.appendChild(linkElement);
+            });
+        }
+
+        // Обновление статистики
+        function updateStatistics() {
+            document.getElementById('stats-views').textContent = globalViewCountEl.textContent;
+            document.getElementById('stats-songs').textContent = playlist.length;
+            document.getElementById('stats-links').textContent = settings.links.length;
+            document.getElementById('stats-last-update').textContent = new Date().toLocaleString();
+        }
+
         // Воспроизведение песни из меню
         function playSong(index) {
             if (index >= 0 && index < playlist.length) {
@@ -1372,6 +1740,7 @@
                 }
                 updatePlaylistManagement();
                 saveSettingsToSupabase();
+                updateStatistics();
                 
                 if (playlist.length > 0) {
                     loadSong(currentSongIndex);
@@ -1387,6 +1756,95 @@
             }
         }
 
+        // Удаление ссылки
+        function removeLink(index) {
+            settings.links.splice(index, 1);
+            updateLinksManagement();
+            updateLinksDisplay();
+            saveSettingsToSupabase();
+            updateStatistics();
+        }
+
+        // Удаление фона
+        function deleteBackground(index) {
+            if (settings.backgrounds[index].value === settings.currentBackground) {
+                alert('Нельзя удалить текущий фон!');
+                return;
+            }
+            settings.backgrounds.splice(index, 1);
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Удаление аватара
+        function deleteAvatar(index) {
+            if (settings.avatars[index].url === settings.currentAvatar) {
+                alert('Нельзя удалить текущий аватар!');
+                return;
+            }
+            settings.avatars.splice(index, 1);
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Удаление курсора
+        function deleteCursor(index) {
+            if (settings.cursors[index].url === settings.currentCursor) {
+                alert('Нельзя удалить текущий курсор!');
+                return;
+            }
+            settings.cursors.splice(index, 1);
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Выбор фона
+        function selectBackground(background) {
+            settings.currentBackground = background;
+            applySettings();
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Выбор аватара
+        function selectAvatar(avatarUrl) {
+            settings.currentAvatar = avatarUrl;
+            applySettings();
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Выбор курсора
+        function selectCursor(cursorUrl) {
+            settings.currentCursor = cursorUrl;
+            applySettings();
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // ВЫБОР ЦВЕТА
+        function selectColor(color) {
+            console.log('Выбран цвет:', color);
+            settings.currentColor = color;
+            applySettings();
+            saveSettingsToSupabase();
+            initCustomizationMenu();
+        }
+
+        // Выбор пользовательского цвета
+        function selectCustomColor() {
+            const color = document.getElementById('custom-color').value;
+            selectColor(color);
+        }
+
+        // Сброс шрифта
+        function resetFont() {
+            settings.currentFont = '';
+            applySettings();
+            saveSettingsToSupabase();
+            alert('Шрифт сброшен!');
+        }
+
         // ПРОСТАЯ ПРОВЕРКА URL (без строгой валидации)
         function isValidAudioURL(url) {
             if (!url) return false;
@@ -1398,7 +1856,7 @@
                    url.startsWith('blob:');
         }
 
-        // ДОБАВЛЕНИЕ НОВОЙ ПЕСНИ - УПРОЩЕННАЯ ВЕРСИЯ
+        // ДОБАВЛЕНИЕ НОВОЙ ПЕСНИ
         async function addNewSong() {
             const title = document.getElementById('new-song-title').value.trim();
             const artist = document.getElementById('new-song-artist').value.trim();
@@ -1448,6 +1906,7 @@
             playlist.push(newSong);
             updatePlaylistManagement();
             saveSettingsToSupabase();
+            updateStatistics();
             
             // Очищаем поля
             document.getElementById('new-song-title').value = '';
@@ -1464,6 +1923,179 @@
             }
 
             alert('Песня добавлена в плейлист!');
+        }
+
+        // Добавление новой ссылки
+        function addNewLink() {
+            const name = document.getElementById('new-link-name').value;
+            const url = document.getElementById('new-link-url').value;
+            const icon = document.getElementById('new-link-icon').value;
+
+            if (name && url) {
+                settings.links.push({
+                    name: name,
+                    url: url,
+                    icon: icon || ''
+                });
+                updateLinksManagement();
+                updateLinksDisplay();
+                saveSettingsToSupabase();
+                updateStatistics();
+                
+                document.getElementById('new-link-name').value = '';
+                document.getElementById('new-link-url').value = '';
+                document.getElementById('new-link-icon').value = '';
+                
+                alert('Ссылка добавлена!');
+            } else {
+                alert('Заполните название и URL!');
+            }
+        }
+
+        // Добавление пользовательского фона
+        function addCustomBackground() {
+            const url = document.getElementById('custom-background-url').value;
+            if (url) {
+                settings.backgrounds.push({
+                    name: 'Пользовательский фон',
+                    type: url.includes('.mp4') || url.includes('.webm') ? 'video' : 'color',
+                    value: url
+                });
+                document.getElementById('custom-background-url').value = '';
+                saveSettingsToSupabase();
+                initCustomizationMenu();
+                alert('Фон добавлен!');
+            }
+        }
+
+        // Сохранение био
+        function saveBio() {
+            const bio = document.getElementById('custom-bio').value;
+            if (bio) {
+                settings.profileBio = bio;
+                applySettings();
+                saveSettingsToSupabase();
+                document.getElementById('custom-bio').value = '';
+                alert('Описание обновлено!');
+            }
+        }
+
+        // Сохранение имени
+        function saveName() {
+            const name = document.getElementById('custom-name').value;
+            if (name) {
+                settings.profileName = name;
+                applySettings();
+                saveSettingsToSupabase();
+                document.getElementById('custom-name').value = '';
+                alert('Ник обновлен!');
+            }
+        }
+
+        // СБРОС ВСЕХ НАСТРОЕК
+        function resetAllSettings() {
+            if (confirm('Вы уверены, что хотите сбросить ВСЕ настройки? Это действие нельзя отменить!')) {
+                // Сбрасываем настройки к значениям по умолчанию
+                settings = {
+                    backgrounds: [
+                        { name: 'Темный', type: 'color', value: '#000000' },
+                        { name: 'Синий градиент', type: 'color', value: 'linear-gradient(45deg, #000428, #004e92)' },
+                        { name: 'Фиолетовый градиент', type: 'color', value: 'linear-gradient(45deg, #667eea, #764ba2)' },
+                        { name: 'Видео фон', type: 'video', value: 'background.mp4' }
+                    ],
+                    avatars: [
+                        { name: 'Текущий', url: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg' }
+                    ],
+                    cursors: [
+                        { name: 'Стандартный', url: 'default' }
+                    ],
+                    colors: [
+                        { name: 'Голубой', value: '#00b4d8' },
+                        { name: 'Красный', value: '#ff6b6b' },
+                        { name: 'Зеленый', value: '#51cf66' },
+                        { name: 'Желтый', value: '#ffd43b' },
+                        { name: 'Фиолетовый', value: '#cc5de8' }
+                    ],
+                    currentBackground: 'background.mp4',
+                    currentAvatar: 'https://i.pinimg.com/736x/bd/44/50/bd4450ffda9ba189736f8b734356fa5e.jpg',
+                    currentCursor: 'default',
+                    currentColor: '#00b4d8',
+                    currentFont: '',
+                    profileName: 'mike nekrulov',
+                    profileBio: 'hey',
+                    links: [
+                        { name: 'Telegram', url: 'https://t.me/mosc8n', icon: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg' }
+                    ]
+                };
+
+                playlist = [];
+                currentSongIndex = 0;
+                isPlaying = false;
+
+                applySettings();
+                saveSettingsToSupabase();
+                initCustomizationMenu();
+                
+                alert('Все настройки сброшены!');
+            }
+        }
+
+        // ЭКСПОРТ НАСТРОЕК
+        function exportSettings() {
+            const exportData = {
+                settings: settings,
+                playlist: playlist,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `mike-bio-settings-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            alert('Настройки экспортированы!');
+        }
+
+        // ИМПОРТ НАСТРОЕК
+        function importSettings() {
+            const fileInput = document.getElementById('import-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Выберите файл для импорта!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importData = JSON.parse(e.target.result);
+                    
+                    // Проверяем структуру файла
+                    if (!importData.settings || !importData.playlist) {
+                        throw new Error('Неверный формат файла');
+                    }
+
+                    if (confirm('Заменить текущие настройки импортированными?')) {
+                        settings = importData.settings;
+                        playlist = importData.playlist;
+                        
+                        applySettings();
+                        saveSettingsToSupabase();
+                        initCustomizationMenu();
+                        
+                        alert('Настройки импортированы!');
+                        fileInput.value = '';
+                    }
+                } catch (error) {
+                    alert('Ошибка импорта: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
         }
 
         // Загрузка аудио файла
@@ -1583,7 +2215,44 @@
             requestAnimationFrame(updateProgressBar);
         }
 
-        // Остальные функции плеера (updateVolumeIcon, setVolume, toggleMute, setProgress) остаются без изменений
+        function updateVolumeIcon() {
+            const volume = audioPlayer.volume;
+            if (volume === 0) {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else if (volume < 0.5) {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        }
+
+        function setVolume() {
+            const volume = volumeSlider.value / 100;
+            audioPlayer.volume = volume;
+            updateVolumeIcon();
+        }
+
+        function toggleMute() {
+            if (audioPlayer.volume > 0) {
+                volumeSlider.dataset.previousVolume = volumeSlider.value;
+                audioPlayer.volume = 0;
+                volumeSlider.value = 0;
+            } else {
+                const previousVolume = volumeSlider.dataset.previousVolume || 70;
+                audioPlayer.volume = previousVolume / 100;
+                volumeSlider.value = previousVolume;
+            }
+            updateVolumeIcon();
+        }
+
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            if (duration && isFinite(duration)) {
+                audioPlayer.currentTime = (clickX / width) * duration;
+            }
+        }
 
         // Обработчики событий
         document.addEventListener('DOMContentLoaded', async function() {
@@ -1623,15 +2292,114 @@
             });
 
             // Обработчики для меню кастомизации
+            document.getElementById('add-background').addEventListener('click', addCustomBackground);
             document.getElementById('add-song').addEventListener('click', addNewSong);
-            // ... остальные обработчики
+            document.getElementById('add-link').addEventListener('click', addNewLink);
+            document.getElementById('save-bio').addEventListener('click', saveBio);
+            document.getElementById('save-name').addEventListener('click', saveName);
+            document.getElementById('apply-custom-color').addEventListener('click', selectCustomColor);
+            document.getElementById('reset-font').addEventListener('click', resetFont);
+            document.getElementById('reset-all').addEventListener('click', resetAllSettings);
+            document.getElementById('export-settings').addEventListener('click', exportSettings);
+            document.getElementById('import-settings').addEventListener('click', importSettings);
+
+            // Обработчики для загрузки файлов
+            document.getElementById('avatar-file').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newAvatar = {
+                            name: 'Загруженный аватар',
+                            url: e.target.result
+                        };
+                        settings.avatars.push(newAvatar);
+                        settings.currentAvatar = e.target.result;
+                        applySettings();
+                        saveSettingsToSupabase();
+                        initCustomizationMenu();
+                        alert('Аватар загружен!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('cursor-file').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newCursor = {
+                            name: 'Загруженный курсор',
+                            url: e.target.result
+                        };
+                        settings.cursors.push(newCursor);
+                        settings.currentCursor = e.target.result;
+                        applySettings();
+                        saveSettingsToSupabase();
+                        initCustomizationMenu();
+                        alert('Курсор загружен!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('font-file').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const font = new FontFace('CustomFont', `url(${e.target.result})`);
+                        font.load().then(function(loadedFont) {
+                            document.fonts.add(loadedFont);
+                            settings.currentFont = e.target.result;
+                            applySettings();
+                            saveSettingsToSupabase();
+                            alert('Шрифт загружен и применен!');
+                        }).catch(function(error) {
+                            alert('Ошибка загрузки шрифта: ' + error);
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('background-file').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const isVideo = file.type.includes('video');
+                        const newBackground = {
+                            name: 'Загруженный фон',
+                            type: isVideo ? 'video' : 'color',
+                            value: e.target.result
+                        };
+                        settings.backgrounds.push(newBackground);
+                        settings.currentBackground = e.target.result;
+                        applySettings();
+                        saveSettingsToSupabase();
+                        initCustomizationMenu();
+                        alert('Фон загружен!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         });
 
         // Глобальные функции для вызова из HTML
         window.playSong = playSong;
         window.removeSong = removeSong;
+        window.removeLink = removeLink;
+        window.deleteBackground = deleteBackground;
+        window.deleteAvatar = deleteAvatar;
+        window.deleteCursor = deleteCursor;
+        window.selectBackground = selectBackground;
+        window.selectAvatar = selectAvatar;
+        window.selectCursor = selectCursor;
         window.selectColor = selectColor;
-        // ... остальные глобальные функции
+        window.selectCustomColor = selectCustomColor;
+        window.resetFont = resetFont;
 
         // Вспомогательные функции
         function showModal(modal) {
@@ -1640,46 +2408,6 @@
 
         function hideModal(modal) {
             modal.style.display = 'none';
-        }
-
-        // Функции для работы с громкостью (остаются без изменений)
-        function updateVolumeIcon() {
-            const volume = audioPlayer.volume;
-            if (volume === 0) {
-                volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            } else if (volume < 0.5) {
-                volumeIcon.innerHTML = '<i class="fas fa-volume-down"></i>';
-            } else {
-                volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
-            }
-        }
-
-        function setVolume() {
-            const volume = volumeSlider.value / 100;
-            audioPlayer.volume = volume;
-            updateVolumeIcon();
-        }
-
-        function toggleMute() {
-            if (audioPlayer.volume > 0) {
-                volumeSlider.dataset.previousVolume = volumeSlider.value;
-                audioPlayer.volume = 0;
-                volumeSlider.value = 0;
-            } else {
-                const previousVolume = volumeSlider.dataset.previousVolume || 70;
-                audioPlayer.volume = previousVolume / 100;
-                volumeSlider.value = previousVolume;
-            }
-            updateVolumeIcon();
-        }
-
-        function setProgress(e) {
-            const width = this.clientWidth;
-            const clickX = e.offsetX;
-            const duration = audioPlayer.duration;
-            if (duration && isFinite(duration)) {
-                audioPlayer.currentTime = (clickX / width) * duration;
-            }
         }
     </script>
 </body>
